@@ -131,7 +131,7 @@
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 0.5rem;
             margin-top: 1rem;
-            margin-bottom: -0.5rem;
+            margin-bottom: 1rem; /* Changed from -0.5rem to 1rem */
             font-size: 1.2rem;
             color: var(--accent-color);
         }
@@ -310,6 +310,12 @@
             flex-grow: 0;
         }
 
+        #save-character-btn,
+        .char-actions button {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+        }
+
         .character-details-form-group {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -328,7 +334,7 @@
 <body>
 
     <div class="container">
-        <h1>Generator Prompt Gambar (Output JSON)</h1>
+        <h1>Image Generator "WadesinG"</h1>
         
         <div class="input-group" style="margin-bottom: 1.5rem;">
             <label for="theme-select">Pilih Tema</label>
@@ -440,6 +446,19 @@
                     <option value="GoPro Camera">GoPro Camera</option>
                     <option value="Vintage Camera">Vintage Camera</option>
                     <option value="Disposable Camera">Disposable Camera</option>
+                </select>
+
+                <label for="lens-select" style="margin-top: 1rem;">Lensa Kamera</label>
+                <select id="lens-select">
+                    <option value="">-- Tidak ada --</option>
+                    <option value="Wide-angle Lens">Wide-angle Lens (Lensa Sudut Lebar)</option>
+                    <option value="Standard Lens">Standard Lens (Lensa Standar/Normal)</option>
+                    <option value="Telephoto Lens">Telephoto Lens (Lensa Telefoto)</option>
+                    <option value="Macro Lens">Macro Lens (Lensa Makro)</option>
+                    <option value="Fisheye Lens">Fisheye Lens (Lensa Mata Ikan)</option>
+                    <option value="Prime Lens">Prime Lens (Lensa Prime/Fokus Tetap)</option>
+                    <option value="Zoom Lens">Zoom Lens (Lensa Zoom)</option>
+                    <option value="Tilt-Shift Lens">Tilt-Shift Lens (Lensa Tilt-Shift)</option>
                 </select>
             </div>
         </div>
@@ -666,7 +685,9 @@
                             <option value="Rompi">Rompi</option>
                             <option value="Tank Top">Tank Top</option>
                             <option value="Crop Top">Crop Top</option>
+                            <option value="User Defined">User Defined</option>
                         </select>
+                        <input type="text" id="char-clothing-top-custom" placeholder="Masukkan atasan kustom" style="display: none; margin-top: 0.5rem;">
                     </div>
                 </div>
                 <div class="character-details-form-group">
@@ -683,7 +704,9 @@
                             <option value="Legging">Legging</option>
                             <option value="Jogger">Jogger</option>
                             <option value="Kulot">Kulot</option>
+                            <option value="User Defined">User Defined</option>
                         </select>
+                        <input type="text" id="char-clothing-bottom-custom" placeholder="Masukkan bawahan kustom" style="display: none; margin-top: 0.5rem;">
                     </div>
                     <div class="input-group">
                         <label for="char-clothing-footwear">Alas Kaki</label>
@@ -696,7 +719,16 @@
                             <option value="Boots">Boots</option>
                             <option value="Flat Shoes">Flat Shoes</option>
                             <option value="Loafers">Loafers</option>
+                            <option value="User Defined">User Defined</option>
                         </select>
+                        <input type="text" id="char-clothing-footwear-custom" placeholder="Masukkan alas kaki kustom" style="display: none; margin-top: 0.5rem;">
+                    </div>
+                </div>
+
+                <div class="character-details-form-group full-width">
+                    <div class="input-group">
+                        <label for="char-head-accessory">Aksesoris Kepala</label>
+                        <input type="text" id="char-head-accessory" placeholder="Contoh: Topi, Hijab, Peci, Bando">
                     </div>
                 </div>
 
@@ -718,7 +750,7 @@
                     <button type="submit" class="button" id="save-character-btn">Simpan Karakter</button>
                 </div>
             </form>
-            <hr style="margin: 2rem 0; border-color: var(--border-color);">
+            <hr style="margin: 2rem 0; border-color: transparent;">
             <h3>Karakter Tersimpan</h3>
             <ul id="character-list">
                 <!-- Character list will be populated by JavaScript -->
@@ -749,6 +781,7 @@
             const photographerSelect = document.getElementById('photographer-select');
             const japaneseStyleSelect = document.getElementById('japanese-style-select');
             const colorToneSelect = document.getElementById('color-tone-select');
+            const lensSelect = document.getElementById('lens-select');
             
             // --- CHARACTER MODAL ELEMENTS ---
             const characterModal = document.getElementById('character-modal');
@@ -774,10 +807,29 @@
             const charBodyHeightInput = document.getElementById('char-body-height');
             const charClothingStyleInput = document.getElementById('char-clothing-style');
             const charClothingTopInput = document.getElementById('char-clothing-top');
+            const charClothingTopCustomInput = document.getElementById('char-clothing-top-custom');
             const charClothingBottomInput = document.getElementById('char-clothing-bottom');
+            const charClothingBottomCustomInput = document.getElementById('char-clothing-bottom-custom');
             const charClothingFootwearInput = document.getElementById('char-clothing-footwear');
+            const charClothingFootwearCustomInput = document.getElementById('char-clothing-footwear-custom');
             const charFeature1Input = document.getElementById('char-feature-1');
             const charFeature2Input = document.getElementById('char-feature-2');
+            const charHeadAccessoryInput = document.getElementById('char-head-accessory');
+
+            // Helper function to toggle custom input visibility
+            const toggleCustomInput = (selectElement, customInputElement) => {
+                if (selectElement.value === 'User Defined') {
+                    customInputElement.style.display = 'block';
+                } else {
+                    customInputElement.style.display = 'none';
+                    customInputElement.value = ''; // Clear custom input when not 'User Defined'
+                }
+            };
+
+            // Add event listeners for clothing dropdowns
+            charClothingTopInput.addEventListener('change', () => toggleCustomInput(charClothingTopInput, charClothingTopCustomInput));
+            charClothingBottomInput.addEventListener('change', () => toggleCustomInput(charClothingBottomInput, charClothingBottomCustomInput));
+            charClothingFootwearInput.addEventListener('change', () => toggleCustomInput(charClothingFootwearInput, charClothingFootwearCustomInput));
 
             const characterListUl = document.getElementById('character-list');
             const characterSelect = document.getElementById('character-select');
@@ -815,7 +867,8 @@
                 distinguishing_features: {
                     feature_1: "",
                     feature_2: ""
-                }
+                },
+                head_accessory: ""
             });
 
             const ids = {
@@ -889,10 +942,19 @@
                 charBodyHeightInput.value = details.body.height || '';
                 charClothingStyleInput.value = details.clothing.style || '';
                 charClothingTopInput.value = details.clothing.top || '';
+                charClothingTopCustomInput.value = details.clothing.top_custom || '';
+                toggleCustomInput(charClothingTopInput, charClothingTopCustomInput);
+
                 charClothingBottomInput.value = details.clothing.bottom || '';
+                charClothingBottomCustomInput.value = details.clothing.bottom_custom || '';
+                toggleCustomInput(charClothingBottomInput, charClothingBottomCustomInput);
+
                 charClothingFootwearInput.value = details.clothing.footwear || '';
+                charClothingFootwearCustomInput.value = details.clothing.footwear_custom || '';
+                toggleCustomInput(charClothingFootwearInput, charClothingFootwearCustomInput);
                 charFeature1Input.value = details.distinguishing_features.feature_1 || '';
                 charFeature2Input.value = details.distinguishing_features.feature_2 || '';
+                charHeadAccessoryInput.value = details.head_accessory || '';
             };
 
             manageCharactersBtn.addEventListener('click', () => {
@@ -938,14 +1000,18 @@
                     },
                     clothing: {
                         style: charClothingStyleInput.value.trim(),
-                        top: charClothingTopInput.value.trim(),
-                        bottom: charClothingBottomInput.value.trim(),
-                        footwear: charClothingFootwearInput.value.trim()
+                        top: charClothingTopInput.value.trim() === 'User Defined' ? charClothingTopCustomInput.value.trim() : charClothingTopInput.value.trim(),
+                        top_custom: charClothingTopInput.value.trim() === 'User Defined' ? charClothingTopCustomInput.value.trim() : '',
+                        bottom: charClothingBottomInput.value.trim() === 'User Defined' ? charClothingBottomCustomInput.value.trim() : charClothingBottomInput.value.trim(),
+                        bottom_custom: charClothingBottomInput.value.trim() === 'User Defined' ? charClothingBottomCustomInput.value.trim() : '',
+                        footwear: charClothingFootwearInput.value.trim() === 'User Defined' ? charClothingFootwearCustomInput.value.trim() : charClothingFootwearInput.value.trim(),
+                        footwear_custom: charClothingFootwearInput.value.trim() === 'User Defined' ? charClothingFootwearCustomInput.value.trim() : ''
                     },
                     distinguishing_features: {
                         feature_1: charFeature1Input.value.trim(),
                         feature_2: charFeature2Input.value.trim()
-                    }
+                    },
+                    head_accessory: charHeadAccessoryInput.value.trim()
                 };
 
                 // Clean up empty nested objects/properties before saving
@@ -1070,6 +1136,11 @@
                 const cameraTypeStyle = getVal('camera-type-select');
                 if (cameraTypeStyle) {
                     selectedStyleArray.push(`Shot with ${cameraTypeStyle}`);
+                }
+
+                const lensStyle = lensSelect.value;
+                if (lensStyle) {
+                    selectedStyleArray.push(`${lensStyle}`);
                 }
 
                 const promptObject = {
