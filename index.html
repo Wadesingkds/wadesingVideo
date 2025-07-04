@@ -3,399 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generator Prompt Gambar</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
-
-        :root, [data-theme="dark"] {
-            --bg-color: #1a1a1a;
-            --primary-color: #2d2d2d;
-            --secondary-color: #444;
-            --accent-color: #007bff;
-            --accent-hover: #0056b3;
-            --text-color: #f0f0f0;
-            --label-color: #bbb;
-            --border-color: #555;
-            --tag-bg: #555;
-            --tag-hover: #777;
-            --tag-selected-bg: var(--accent-color);
-            --tag-selected-hover: var(--accent-hover);
-            --modal-bg: rgba(0, 0, 0, 0.7);
-        }
-
-        [data-theme="light"] {
-            --bg-color: #f0f0f0;
-            --primary-color: #ffffff;
-            --secondary-color: #e9e9e9;
-            --accent-color: #007bff;
-            --accent-hover: #0056b3;
-            --text-color: #1a1a1a;
-            --label-color: #555;
-            --border-color: #ccc;
-            --tag-bg: #e0e0e0;
-            --tag-hover: #c9c9c9;
-            --modal-bg: rgba(0, 0, 0, 0.4);
-        }
-
-        [data-theme="blue"] {
-            --bg-color: #0f172a;
-            --primary-color: #1e293b;
-            --secondary-color: #334155;
-            --accent-color: #38bdf8;
-            --accent-hover: #0ea5e9;
-            --text-color: #f1f5f9;
-            --label-color: #94a3b8;
-            --border-color: #475569;
-            --tag-bg: #475569;
-            --tag-hover: #64748b;
-            --modal-bg: rgba(15, 23, 42, 0.7);
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 2rem;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 800px;
-            background-color: var(--primary-color);
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 2rem;
-            font-weight: 700;
-            color: var(--text-color);
-        }
-
-        .prompt-builder {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
-
-        .input-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .input-group label {
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--label-color);
-        }
-
-        .input-group input,
-        .input-group textarea,
-        .input-group select {
-            background-color: var(--secondary-color);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 0.75rem;
-            color: var(--text-color);
-            font-size: 1rem;
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-
-        .input-group select {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23bbb%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.4-5.4-12.8z%22/%3E%3C/svg%3E');
-            background-repeat: no-repeat;
-            background-position: right 0.75rem center;
-            background-size: 0.65em auto;
-        }
-
-        .input-group input:focus,
-        .input-group textarea:focus,
-        .input-group select:focus {
-            outline: none;
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-color) 25%, transparent);
-        }
-        
-        .section-title {
-            grid-column: 1 / -1;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 0.5rem;
-            margin-top: 1rem;
-            margin-bottom: 1rem; /* Changed from -0.5rem to 1rem */
-            font-size: 1.2rem;
-            color: var(--accent-color);
-        }
-
-        .button-group {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        button, .button {
-            flex-grow: 1;
-            padding: 0.8rem 1.5rem;
-            border: none;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.1s;
-            text-align: center;
-            text-decoration: none;
-            color: var(--text-color);
-        }
-
-        #generate-btn {
-            background-color: var(--accent-color);
-            color: white;
-        }
-
-        #generate-btn:hover {
-            background-color: var(--accent-hover);
-        }
-        
-        #copy-btn, #manage-characters-btn {
-            background-color: var(--secondary-color);
-            color: var(--text-color);
-        }
-        
-        #copy-btn:hover, #manage-characters-btn:hover {
-            background-color: color-mix(in srgb, var(--secondary-color) 85%, #000);
-        }
-        
-        button:active, .button:active {
-            transform: scale(0.98);
-        }
-
-        #result-container {
-            margin-top: 2rem;
-        }
-
-        #result-prompt {
-            height: 250px;
-            resize: vertical;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 0.9rem;
-        }
-        
-        .copy-feedback {
-            text-align: center;
-            margin-top: 0.5rem;
-            color: var(--accent-color);
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
-
-        .style-tags-container {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-top: 0.5rem;
-        }
-
-        .style-category {
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1rem;
-        }
-
-        .style-category-title {
-            font-weight: 600;
-            color: var(--accent-color);
-            margin-bottom: 0.75rem;
-            display: block;
-        }
-
-        .style-tags-wrapper {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .style-tag {
-            background-color: var(--tag-bg);
-            color: var(--text-color);
-            padding: 0.5rem 0.8rem;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: background-color 0.2s, transform 0.1s;
-            font-size: 0.9rem;
-        }
-
-        .style-tag:hover {
-            background-color: var(--tag-hover);
-        }
-
-        .style-tag.selected {
-            background-color: var(--tag-selected-bg);
-            color: white;
-        }
-
-        .style-tag.selected:hover {
-            background-color: var(--tag-selected-hover);
-        }
-
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: var(--modal-bg);
-        }
-
-        .modal-content {
-            background-color: var(--primary-color);
-            margin: 5% auto;
-            padding: 2rem;
-            border: 1px solid var(--border-color);
-            width: 80%;
-            max-width: 700px;
-            border-radius: 12px;
-            position: relative;
-        }
-
-        .close-btn {
-            color: var(--label-color);
-            position: absolute;
-            top: 1rem;
-            right: 1.5rem;
-            font-size: 2rem;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .close-btn:hover,
-        .close-btn:focus {
-            color: var(--text-color);
-        }
-
-        #character-list {
-            list-style: none;
-            padding: 0;
-            margin-top: 1rem;
-        }
-
-        #character-list li {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.75rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        #character-list li:last-child {
-            border-bottom: none;
-        }
-
-        .char-actions button {
-            margin-left: 0.5rem;
-            padding: 0.3rem 0.7rem;
-            font-size: 0.9rem;
-            flex-grow: 0;
-        }
-
-        #save-character-btn,
-        .char-actions button {
-            background-color: var(--secondary-color);
-            color: var(--text-color);
-        }
-
-        .character-details-form-group {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-        .character-details-form-group.full-width {
-            grid-template-columns: 1fr;
-        }
-        .character-details-form-group .input-group {
-            margin-bottom: 0;
-        }
-
-    </style>
+    <title>Image Generator "WadesinG"</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="bg-slate-50 text-slate-800 font-sans p-8 flex justify-center items-start min-h-screen">
 
-    <div class="container">
-        <h1>Image Generator "WadesinG"</h1>
-        
-        <div class="input-group" style="margin-bottom: 1.5rem;">
-            <label for="theme-select">Pilih Tema</label>
-            <select id="theme-select">
-                <option value="dark">Gelap</option>
-                <option value="light">Terang</option>
-                <option value="blue">Biru</option>
-            </select>
-        </div>
+    <div class="container mx-auto w-full max-w-3xl bg-white rounded-xl shadow-lg p-8">
+        <h1 class="text-center text-3xl md:text-4xl font-bold text-slate-900 mb-8">Image Generator "WadesinG"</h1>
 
-        <div id="prompt-form" class="prompt-builder">
+        <div id="prompt-form" class="grid grid-cols-1 gap-6">
             
-            <h2 class="section-title">Visual</h2>
+            
 
-            <div class="input-group">
-                <label for="character-select">Pilih Karakter</label>
-                <div style="display: flex; gap: 1rem;">
-                    <select id="character-select" style="flex-grow: 1;">
+            <div class="mb-4">
+                <label for="character-select" class="block text-sm font-bold text-gray-700 mb-1">Pilih Karakter</label>
+                <div class="flex gap-4">
+                    <select id="character-select" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 flex-grow">
                         <option value="">-- Tanpa Karakter --</option>
                     </select>
-                    <button id="manage-characters-btn" class="button">Kelola</button>
+                    <button id="manage-characters-btn" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors">Kelola</button>
                 </div>
             </div>
 
-            <div class="input-group">
-                <label for="action">Aksi / Pose</label>
-                <input type="text" id="action" placeholder="Contoh: Berdiri tegap memegang katana">
+            <div class="mb-4">
+                <label for="action" class="block text-sm font-bold text-gray-700 mb-1">Aksi / Pose</label>
+                <input type="text" id="action" placeholder="Contoh: Berdiri tegap memegang katana" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
             </div>
 
-            <div class="input-group">
-                <label for="setting">Latar (Lokasi & Lingkungan)</label>
-                <input type="text" id="setting" placeholder="Contoh: Hutan bambu yang disinari cahaya bulan">
+            <div class="mb-4">
+                <label for="setting" class="block text-sm font-bold text-gray-700 mb-1">Latar (Lokasi & Lingkungan)</label>
+                <input type="text" id="setting" placeholder="Contoh: Hutan bambu yang disinari cahaya bulan" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
             </div>
 
-            <div class="input-group">
-                <label for="style-input">Gaya Visual</label>
-                <div id="style-tags-container" class="style-tags-container">
-                    <!-- Style tags will be loaded here by JavaScript -->
-                </div>
-                <input type="text" id="style-custom" placeholder="Atau masukkan gaya kustom lainnya, pisahkan dengan koma" style="margin-top: 0.5rem;">
-                
-                <label for="photographer-select" style="margin-top: 1rem;">Referensi Gaya Fotografer</label>
-                <select id="photographer-select">
+            <div class="mb-4">
+                <label for="style-select" class="block text-sm font-bold text-gray-700 mb-1">Gaya Visual</label>
+                <select id="style-select" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                     <option value="">-- Tidak ada --</option>
-                    <option value="Ansel Adams">Ansel Adams - Lanskap Hitam Putih Kontras Tinggi</option>
-                    <option value="Annie Leibovitz">Annie Leibovitz - Potret Konseptual & Dramatis</option>
-                    <option value="Steve McCurry">Steve McCurry - Perjalanan & Jurnalistik Penuh Warna</option>
-                    <option value="Henri Cartier-Bresson">Henri Cartier-Bresson - Street Photography & Momen Penentu (B&W)</option>
-                    <option value="Sebastião Salgado">Sebastião Salgado - Dokumenter Sosial Skala Besar (B&W)</option>
-                    <option value="Yousuf Karsh">Yousuf Karsh - Potret Studio Ikonik & Pencahayaan Dramatis</option>
-                    <option value="Robert Capa">Robert Capa - Fotografi Perang (Getaran 'In-the-Action')</option>
-                    <option value="Dorothea Lange">Dorothea Lange - Dokumenter Era Depresi & Kemanusiaan</option>
-                    <option value="Irving Penn">Irving Penn - Fashion & Potret Elegan Minimalis</option>
-                    <option value="Richard Avedon">Richard Avedon - Potret Minimalis & Fashion (Latar Belakang Putih)</option>
-                    <option value="Gregory Crewdson">Gregory Crewdson - Pemandangan Sinematik & Sureal</option>
-                    <option value="Cindy Sherman">Cindy Sherman - Potret Diri Konseptual & Kritik Sosial</option>
-                    <option value="Tim Walker">Tim Walker - Fashion Sureal & Fantastis</option>
+                    <option value="Portrait Photography">Portrait Photography (Fotografi Potret)</option>
+                    <option value="Landscape Photography">Landscape Photography (Fotografi Lanskap)</option>
+                    <option value="Street Photography">Street Photography (Fotografi Jalanan)</option>
+                    <option value="Fashion Photography">Fashion Photography (Fotografi Fesyen)</option>
+                    <option value="Documentary Photography">Documentary Photography (Fotografi Dokumenter)</option>
+                    <option value="Architectural Photography">Architectural Photography (Fotografi Arsitektur)</option>
+                    <option value="Wildlife Photography">Wildlife Photography (Fotografi Satwa Liar)</option>
+                    <option value="Cinematic Photography">Cinematic Photography</option>
                 </select>
-
-                <label for="japanese-style-select" style="margin-top: 1rem;">Referensi Gaya Jepang</label>
-                <select id="japanese-style-select">
+            </div>
+            <div class="mb-4">
+                <label for="japanese-style-select" class="block text-sm font-bold text-gray-700 mb-1">Referensi Gaya Jepang</label>
+                <select id="japanese-style-select" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                     <option value="">-- Tidak ada --</option>
                     <option value="Hayao Miyazaki (Studio Ghibli)">Hayao Miyazaki (Studio Ghibli) - Animasi Fantasi & Penuh Pesona</option>
                     <option value="Akira Kurosawa">Akira Kurosawa - Komposisi Sinematik Epik (Gaya Samurai)</option>
@@ -406,9 +65,62 @@
                     <option value="Rinko Kawauchi">Rinko Kawauchi - Puitis & Tenang (Palet Warna Lembut)</option>
                     <option value="Hiroshi Sugimoto">Hiroshi Sugimoto - Konseptual & Minimalis (Long Exposure)</option>
                 </select>
-
-                <label for="color-tone-select" style="margin-top: 1rem;">Color Tone</label>
-                <select id="color-tone-select">
+            </div>
+            <div class="mb-4">
+                <label for="color-film-type-select" class="block text-sm font-bold text-gray-700 mb-1">Color Film Type</label>
+                <select id="color-film-type-select" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    <option value="">-- Tidak ada --</option>
+                    <option value="CINESTILL 800T">CINESTILL 800T</option>
+                    <option value="KODAK PORTRA 800">KODAK PORTRA 800</option>
+                    <option value="LOMOGRAPHY X-PRO 200">LOMOGRAPHY X-PRO 200</option>
+                    <option value="KODAK EKTACHROME">KODAK EKTACHROME</option>
+                    <option value="FUJIFILM PRO 400H">FUJIFILM PRO 400H</option>
+                    <option value="LOMOGRAPHY COLOR NEGATIVE 800">LOMOGRAPHY COLOR NEGATIVE 800</option>
+                    <option value="KODAK EKTAR 100">KODAK EKTAR 100</option>
+                    <option value="REVOLG KOLOR">REVOLG KOLOR</option>
+                    <option value="AGFA VISTA PLUS 200">AGFA VISTA PLUS 200</option>
+                    <option value="FUJIFILM VELVIA 50">FUJIFILM VELVIA 50</option>
+                    <option value="FUJIFILM SUPERIA X-TRA">FUJIFILM SUPERIA X-TRA</option>
+                    <option value="KODAK GOLD 200">KODAK GOLD 200</option>
+                    <option value="FUJIFILM PROVIA 100F">FUJIFILM PROVIA 100F</option>
+                    <option value="ADOX COLOR IMPLOSION">ADOX COLOR IMPLOSION</option>
+                    <option value="AGFA VISTA 400">AGFA VISTA 400</option>
+                    <option value="LOMOGRAPHY REDSCALE">LOMOGRAPHY REDSCALE</option>
+                    <option value="KODAK VISION3 500T">KODAK VISION3 500T</option>
+                    <option value="LOMOGRAPHY DIANA F+">LOMOGRAPHY DIANA F+</option>
+                    <option value="POLAROID ORIGINALS (NOT 35MM)">POLAROID ORIGINALS (NOT 35MM)</option>
+                    <option value="FUJIFILM INSTAX MINI (NOT 35MM)">FUJIFILM INSTAX MINI (NOT 35MM)</option>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label for="light-conditions-select" class="block text-sm font-bold text-gray-700 mb-1">Light Conditions</label>
+                <select id="light-conditions-select" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    <option value="">-- Tidak ada --</option>
+                    <option value="GOLDEN HOUR">GOLDEN HOUR</option>
+                    <option value="BLUE HOUR">BLUE HOUR</option>
+                    <option value="OVERCAST LIGHT">OVERCAST LIGHT</option>
+                    <option value="DIFFUSED LIGHT">DIFFUSED LIGHT</option>
+                    <option value="BACKLIGHTING">BACKLIGHTING</option>
+                    <option value="SOFT AMBIENT LIGHT">SOFT AMBIENT LIGHT</option>
+                    <option value="LOW-KEY LIGHTING">LOW-KEY LIGHTING</option>
+                    <option value="HIGH-KEY LIGHTING">HIGH-KEY LIGHTING</option>
+                    <option value="WINDOW LIGHT">WINDOW LIGHT</option>
+                    <option value="DAPPLED LIGHT">DAPPLED LIGHT</option>
+                    <option value="SPOTLIGHT">SPOTLIGHT</option>
+                    <option value="TWILIGHT LIGHT">TWILIGHT LIGHT</option>
+                    <option value="CANDLELIGHT">CANDLELIGHT</option>
+                    <option value="NEON LIGHT">NEON LIGHT</option>
+                    <option value="MOONLIGHT">MOONLIGHT</option>
+                    <option value="STREET LIGHT">STREET LIGHT</option>
+                    <option value="BOUNCED LIGHT">BOUNCED LIGHT</option>
+                    <option value="LENS FLARE">LENS FLARE</option>
+                    <option value="STUDIO LIGHT">STUDIO LIGHT</option>
+                    <option value="PATTERN LIGHT">PATTERN LIGHT</option>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label for="color-tone-select" class="block text-sm font-bold text-gray-700 mb-1">Color Tone</label>
+                <select id="color-tone-select" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                     <option value="">-- Tidak ada --</option>
                     <option value="Fuji Color Tone">Fuji Color Tone - Hijau & Biru Cerah, Nada Kulit Menyenangkan</option>
                     <option value="Kodak Portra Color Tone">Kodak Portra Color Tone - Hangat, Alami, Warna Lembut</option>
@@ -420,9 +132,10 @@
                     <option value="Cool/Blue Tones">Cool/Blue Tones - Menekankan Biru & Hijau Dingin</option>
                     <option value="Warm/Golden Tones">Warm/Golden Tones - Menekankan Kuning, Oranye, & Merah</option>
                 </select>
-
-                <label for="angle-select" style="margin-top: 1rem;">Angle Foto</label>
-                <select id="angle-select">
+            </div>
+            <div class="mb-4">
+                <label for="angle-select" class="block text-sm font-bold text-gray-700 mb-1">Angle Foto</label>
+                <select id="angle-select" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                     <option value="">-- Tidak ada --</option>
                     <option value="Low Angle">Low Angle (Sudut Rendah)</option>
                     <option value="High Angle">High Angle (Sudut Tinggi)</option>
@@ -431,10 +144,12 @@
                     <option value="Worm's Eye View">Worm's Eye View (Sudut Pandang Cacing)</option>
                     <option value="Bird's Eye View">Bird's Eye View (Sudut Pandang Burung)</option>
                     <option value="Over-the-shoulder Shot">Over-the-shoulder Shot (Dari Balik Bahu)</option>
+                    <option value="POV Shot">POV Shot (Sudut Pandang Orang Pertama)</option>
                 </select>
-
-                <label for="camera-type-select" style="margin-top: 1rem;">Jenis Kamera</label>
-                <select id="camera-type-select">
+            </div>
+            <div class="mb-4">
+                <label for="camera-type-select" class="block text-sm font-bold text-gray-700 mb-1">Jenis Kamera</label>
+                <select id="camera-type-select" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                     <option value="">-- Tidak ada --</option>
                     <option value="Smartphone Camera">Smartphone Camera</option>
                     <option value="iPhone Camera">iPhone Camera</option>
@@ -447,9 +162,10 @@
                     <option value="Vintage Camera">Vintage Camera</option>
                     <option value="Disposable Camera">Disposable Camera</option>
                 </select>
-
-                <label for="lens-select" style="margin-top: 1rem;">Lensa Kamera</label>
-                <select id="lens-select">
+            </div>
+            <div class="mb-4">
+                <label for="lens-select" class="block text-sm font-bold text-gray-700 mb-1">Lensa Kamera</label>
+                <select id="lens-select" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                     <option value="">-- Tidak ada --</option>
                     <option value="Wide-angle Lens">Wide-angle Lens (Lensa Sudut Lebar)</option>
                     <option value="Standard Lens">Standard Lens (Lensa Standar/Normal)</option>
@@ -463,57 +179,67 @@
             </div>
         </div>
 
-        <div class="button-group">
-            <button id="generate-btn">Hasilkan Prompt JSON</button>
+        <div class="border-t-2 border-slate-100 my-8"></div>
+
+        <div>
+            <button id="generate-btn" class="w-full flex items-center justify-center gap-2 px-4 py-3 font-semibold bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 ease-in-out transform hover:scale-105">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                </svg>
+                <span>Hasilkan Prompt</span>
+            </button>
         </div>
 
-        <div id="result-container">
-            <div class="input-group">
-                <label for="result-prompt">JSON yang Dihasilkan</label>
-                <textarea id="result-prompt" readonly></textarea>
-                <div class="copy-feedback" id="copy-feedback">Berhasil disalin!</div>
-            </div>
-            <div class="button-group">
-                 <button id="copy-btn">Salin JSON</button>
+        <div class="mt-6">
+            <label for="result-prompt" class="block text-base font-semibold text-slate-800 mb-2">JSON yang Dihasilkan</label>
+            <div class="relative group">
+                <textarea id="result-prompt" readonly class="block w-full px-4 py-3 font-mono text-sm text-slate-50 bg-slate-800 border border-slate-700 rounded-lg shadow-inner h-96 resize-y focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Hasil JSON akan muncul di sini..."></textarea>
+                <button id="copy-btn" class="absolute top-3 right-10 flex items-center justify-center gap-1 px-3 py-1.5 text-xs font-semibold bg-slate-600 text-white rounded-md hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 transition-opacity duration-200 opacity-25 group-hover:opacity-100">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                    <span>Salin</span>
+                </button>
+                <div id="copy-feedback" class="absolute top-3 right-3 bg-green-600 text-white text-xs font-bold px-2.5 py-1.5 rounded-md opacity-0 transition-opacity duration-300 pointer-events-none">
+                    Berhasil disalin!
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Character Management Modal -->
-    <div id="character-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h2>Kelola Karakter</h2>
-            <form id="character-form">
+    <div id="character-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg shadow-xl p-8 w-11/12 max-w-2xl relative overflow-y-auto max-h-[90vh]">
+            <span class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-3xl cursor-pointer close-btn">&times;</span>
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Kelola Karakter</h2>
+            <form id="character-form" class="space-y-4">
                 <input type="hidden" id="character-id">
-                <div class="input-group">
-                    <label for="char-name">Nama Karakter</label>
-                    <input type="text" id="char-name" required placeholder="Contoh: 'Detektif K'">
+                <div>
+                    <label for="char-name" class="block text-sm font-medium text-gray-700 mb-1">Nama Karakter</label>
+                    <input type="text" id="char-name" required placeholder="Contoh: 'Detektif K'" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                 </div>
 
-                <h3 class="section-title">Detail Fisik</h3>
-                <div class="character-details-form-group">
-                    <div class="input-group">
-                        <label for="char-gender">Gender</label>
-                        <input type="text" id="char-gender" placeholder="Pria/Wanita">
+                <h3 class="text-xl font-semibold text-blue-600 border-b pb-2 mb-4">Detail Fisik</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label for="char-gender" class="block text-sm font-medium text-gray-700 mb-1">Gender</label>
+                        <input type="text" id="char-gender" placeholder="Pria/Wanita" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                     </div>
-                    <div class="input-group">
-                        <label for="char-age">Usia</label>
-                        <input type="text" id="char-age" placeholder="Dewasa Muda, Sekitar 30 tahun">
+                    <div>
+                        <label for="char-age" class="block text-sm font-medium text-gray-700 mb-1">Usia</label>
+                        <input type="text" id="char-age" placeholder="Dewasa Muda, Sekitar 30 tahun" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                     </div>
                 </div>
-                <div class="character-details-form-group full-width">
-                    <div class="input-group">
-                        <label for="char-ethnicity">Etnisitas</label>
-                        <input type="text" id="char-ethnicity" placeholder="Asia Tenggara, Kaukasia, Jepang">
-                    </div>
+                <div class="mb-4">
+                    <label for="char-ethnicity" class="block text-sm font-medium text-gray-700 mb-1">Etnisitas</label>
+                    <input type="text" id="char-ethnicity" placeholder="Asia Tenggara, Kaukasia, Jepang" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                 </div>
 
-                <h4 class="section-title">Wajah</h4>
-                <div class="character-details-form-group">
-                    <div class="input-group">
-                        <label for="char-face-shape">Bentuk Wajah</label>
-                        <select id="char-face-shape">
+                <h4 class="text-lg font-semibold text-blue-600 border-b pb-1 mb-4">Wajah</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label for="char-face-shape" class="block text-sm font-medium text-gray-700 mb-1">Bentuk Wajah</label>
+                        <select id="char-face-shape" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                             <option value="">-- Pilih --</option>
                             <option value="Oval">Oval</option>
                             <option value="Bulat">Bulat</option>
@@ -523,9 +249,9 @@
                             <option value="Berlian">Berlian</option>
                         </select>
                     </div>
-                    <div class="input-group">
-                        <label for="char-skin-tone">Warna Kulit</label>
-                        <select id="char-skin-tone">
+                    <div>
+                        <label for="char-skin-tone" class="block text-sm font-medium text-gray-700 mb-1">Warna Kulit</label>
+                        <select id="char-skin-tone" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                             <option value="">-- Pilih --</option>
                             <option value="Pucat">Pucat</option>
                             <option value="Cerah">Cerah</option>
@@ -535,10 +261,10 @@
                         </select>
                     </div>
                 </div>
-                <div class="character-details-form-group">
-                    <div class="input-group">
-                        <label for="char-eye-color">Warna Mata</label>
-                        <select id="char-eye-color">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label for="char-eye-color" class="block text-sm font-medium text-gray-700 mb-1">Warna Mata</label>
+                        <select id="char-eye-color" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                             <option value="">-- Pilih --</option>
                             <option value="Coklat">Coklat</option>
                             <option value="Biru">Biru</option>
@@ -547,9 +273,9 @@
                             <option value="Hazel">Hazel</option>
                         </select>
                     </div>
-                    <div class="input-group">
-                        <label for="char-nose-shape">Bentuk Hidung</label>
-                        <select id="char-nose-shape">
+                    <div>
+                        <label for="char-nose-shape" class="block text-sm font-medium text-gray-700 mb-1">Bentuk Hidung</label>
+                        <select id="char-nose-shape" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                             <option value="">-- Pilih --</option>
                             <option value="Mancung">Mancung</option>
                             <option value="Pesek">Pesek</option>
@@ -559,25 +285,23 @@
                         </select>
                     </div>
                 </div>
-                <div class="character-details-form-group full-width">
-                    <div class="input-group">
-                        <label for="char-lip-shape">Bentuk Bibir</label>
-                        <select id="char-lip-shape">
-                            <option value="">-- Pilih --</option>
-                            <option value="Penuh">Penuh</option>
-                            <option value="Tipis">Tipis</option>
-                            <option value="Standar">Standar</option>
-                            <option value="Hati">Hati</option>
-                            <option value="Busur Cupid">Busur Cupid</option>
-                        </select>
-                    </div>
+                <div class="mb-4">
+                    <label for="char-lip-shape" class="block text-sm font-medium text-gray-700 mb-1">Bentuk Bibir</label>
+                    <select id="char-lip-shape" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">-- Pilih --</option>
+                        <option value="Penuh">Penuh</option>
+                        <option value="Tipis">Tipis</option>
+                        <option value="Standar">Standar</option>
+                        <option value="Hati">Hati</option>
+                        <option value="Busur Cupid">Busur Cupid</option>
+                    </select>
                 </div>
 
-                <h4 class="section-title">Rambut</h4>
-                <div class="character-details-form-group">
-                    <div class="input-group">
-                        <label for="char-hair-color">Warna Rambut</label>
-                        <select id="char-hair-color">
+                <h4 class="text-lg font-semibold text-blue-600 border-b pb-1 mb-4">Rambut</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label for="char-hair-color" class="block text-sm font-medium text-gray-700 mb-1">Warna Rambut</label>
+                        <select id="char-hair-color" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                             <option value="">-- Pilih --</option>
                             <option value="Hitam">Hitam</option>
                             <option value="Pirang">Pirang</option>
@@ -590,9 +314,9 @@
                             <option value="Ungu">Ungu</option>
                         </select>
                     </div>
-                    <div class="input-group">
-                        <label for="char-hair-style">Gaya Rambut</label>
-                        <select id="char-hair-style">
+                    <div>
+                        <label for="char-hair-style" class="block text-sm font-medium text-gray-700 mb-1">Gaya Rambut</label>
+                        <select id="char-hair-style" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                             <option value="">-- Pilih --</option>
                             <option value="Lurus">Lurus</option>
                             <option value="Bergelombang">Bergelombang</option>
@@ -611,26 +335,24 @@
                         </select>
                     </div>
                 </div>
-                <div class="character-details-form-group full-width">
-                    <div class="input-group">
-                        <label for="char-hair-length">Panjang Rambut</label>
-                        <select id="char-hair-length">
-                            <option value="">-- Pilih --</option>
-                            <option value="Botak">Botak</option>
-                            <option value="Sangat Pendek">Sangat Pendek</option>
-                            <option value="Pendek">Pendek</option>
-                            <option value="Sebahu">Sebahu</option>
-                            <option value="Panjang">Panjang</option>
-                            <option value="Sangat Panjang">Sangat Panjang</option>
-                        </select>
-                    </div>
+                <div class="mb-4">
+                    <label for="char-hair-length" class="block text-sm font-medium text-gray-700 mb-1">Panjang Rambut</label>
+                    <select id="char-hair-length" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">-- Pilih --</option>
+                        <option value="Botak">Botak</option>
+                        <option value="Sangat Pendek">Sangat Pendek</option>
+                        <option value="Pendek">Pendek</option>
+                        <option value="Sebahu">Sebahu</option>
+                        <option value="Panjang">Panjang</option>
+                        <option value="Sangat Panjang">Sangat Panjang</option>
+                    </select>
                 </div>
 
-                <h4 class="section-title">Tubuh</h4>
-                <div class="character-details-form-group">
-                    <div class="input-group">
-                        <label for="char-body-build">Bentuk Tubuh</label>
-                        <select id="char-body-build">
+                <h4 class="text-lg font-semibold text-blue-600 border-b pb-1 mb-4">Tubuh</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label for="char-body-build" class="block text-sm font-medium text-gray-700 mb-1">Bentuk Tubuh</label>
+                        <select id="char-body-build" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                             <option value="">-- Pilih --</option>
                             <option value="Rata-rata">Rata-rata</option>
                             <option value="Langsing">Langsing</option>
@@ -644,17 +366,17 @@
                             <option value="Berlekuk">Berlekuk</option>
                         </select>
                     </div>
-                    <div class="input-group">
-                        <label for="char-body-height">Tinggi Badan</label>
-                        <input type="text" id="char-body-height" placeholder="170cm, Tinggi, Pendek">
+                    <div>
+                        <label for="char-body-height" class="block text-sm font-medium text-gray-700 mb-1">Tinggi Badan</label>
+                        <input type="text" id="char-body-height" placeholder="170cm, Tinggi, Pendek" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                     </div>
                 </div>
 
-                <h4 class="section-title">Pakaian</h4>
-                <div class="character-details-form-group">
-                    <div class="input-group">
-                        <label for="char-clothing-style">Gaya Pakaian</label>
-                        <select id="char-clothing-style">
+                <h4 class="text-lg font-semibold text-blue-600 border-b pb-1 mb-4">Pakaian</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label for="char-clothing-style" class="block text-sm font-medium text-gray-700 mb-1">Gaya Pakaian</label>
+                        <select id="char-clothing-style" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                             <option value="">-- Pilih --</option>
                             <option value="Kasual">Kasual</option>
                             <option value="Formal">Formal</option>
@@ -671,9 +393,9 @@
                             <option value="Etnik">Etnik</option>
                         </select>
                     </div>
-                    <div class="input-group">
-                        <label for="char-clothing-top">Atasan</label>
-                        <select id="char-clothing-top">
+                    <div>
+                        <label for="char-clothing-top" class="block text-sm font-medium text-gray-700 mb-1">Atasan</label>
+                        <select id="char-clothing-top" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                             <option value="">-- Pilih --</option>
                             <option value="Kaos">Kaos</option>
                             <option value="Kemeja">Kemeja</option>
@@ -687,13 +409,13 @@
                             <option value="Crop Top">Crop Top</option>
                             <option value="User Defined">User Defined</option>
                         </select>
-                        <input type="text" id="char-clothing-top-custom" placeholder="Masukkan atasan kustom" style="display: none; margin-top: 0.5rem;">
+                        <input type="text" id="char-clothing-top-custom" placeholder="Masukkan atasan kustom" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 mt-2" style="display: none;">
                     </div>
                 </div>
-                <div class="character-details-form-group">
-                    <div class="input-group">
-                        <label for="char-clothing-bottom">Bawahan</label>
-                        <select id="char-clothing-bottom">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label for="char-clothing-bottom" class="block text-sm font-medium text-gray-700 mb-1">Bawahan</label>
+                        <select id="char-clothing-bottom" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                             <option value="">-- Pilih --</option>
                             <option value="Celana Jeans">Celana Jeans</option>
                             <option value="Celana Kain">Celana Kain</option>
@@ -706,11 +428,11 @@
                             <option value="Kulot">Kulot</option>
                             <option value="User Defined">User Defined</option>
                         </select>
-                        <input type="text" id="char-clothing-bottom-custom" placeholder="Masukkan bawahan kustom" style="display: none; margin-top: 0.5rem;">
+                        <input type="text" id="char-clothing-bottom-custom" placeholder="Masukkan bawahan kustom" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 mt-2" style="display: none;">
                     </div>
-                    <div class="input-group">
-                        <label for="char-clothing-footwear">Alas Kaki</label>
-                        <select id="char-clothing-footwear">
+                    <div>
+                        <label for="char-clothing-footwear" class="block text-sm font-medium text-gray-700 mb-1">Alas Kaki</label>
+                        <select id="char-clothing-footwear" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                             <option value="">-- Pilih --</option>
                             <option value="Sepatu Kets">Sepatu Kets</option>
                             <option value="Sepatu Pantofel">Sepatu Pantofel</option>
@@ -721,67 +443,51 @@
                             <option value="Loafers">Loafers</option>
                             <option value="User Defined">User Defined</option>
                         </select>
-                        <input type="text" id="char-clothing-footwear-custom" placeholder="Masukkan alas kaki kustom" style="display: none; margin-top: 0.5rem;">
+                        <input type="text" id="char-clothing-footwear-custom" placeholder="Masukkan alas kaki kustom" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 mt-2" style="display: none;">
                     </div>
                 </div>
 
-                <div class="character-details-form-group full-width">
-                    <div class="input-group">
-                        <label for="char-head-accessory">Aksesoris Kepala</label>
-                        <input type="text" id="char-head-accessory" placeholder="Contoh: Topi, Hijab, Peci, Bando">
-                    </div>
+                <div class="mb-4">
+                    <label for="char-head-accessory" class="block text-sm font-medium text-gray-700 mb-1">Aksesoris Kepala</label>
+                    <input type="text" id="char-head-accessory" placeholder="Contoh: Topi, Hijab, Peci, Bando" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                 </div>
 
-                <h4 class="section-title">Ciri Khas</h4>
-                <div class="character-details-form-group full-width">
-                    <div class="input-group">
-                        <label for="char-feature-1">Ciri Khas 1</label>
-                        <input type="text" id="char-feature-1" placeholder="Bekas luka di pipi, Tato naga di lengan">
-                    </div>
+                <h4 class="text-lg font-semibold text-blue-600 border-b pb-1 mb-4">Ciri Khas</h4>
+                <div class="mb-4">
+                    <label for="char-feature-1" class="block text-sm font-medium text-gray-700 mb-1">Ciri Khas 1</label>
+                    <input type="text" id="char-feature-1" placeholder="Bekas luka di pipi, Tato naga di lengan" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                 </div>
-                <div class="character-details-form-group full-width">
-                    <div class="input-group">
-                        <label for="char-feature-2">Ciri Khas 2</label>
-                        <input type="text" id="char-feature-2" placeholder="Kacamata bulat, Anting besar">
-                    </div>
+                <div class="mb-4">
+                    <label for="char-feature-2" class="block text-sm font-medium text-gray-700 mb-1">Ciri Khas 2</label>
+                    <input type="text" id="char-feature-2" placeholder="Kacamata bulat, Anting besar" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                 </div>
 
-                <div class="button-group">
-                    <button type="submit" class="button" id="save-character-btn">Simpan Karakter</button>
+                <div class="flex justify-end mt-6">
+                    <div class="flex justify-end mt-6">
+                    <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">Simpan Karakter</button>
+                </div>
                 </div>
             </form>
-            <hr style="margin: 2rem 0; border-color: transparent;">
-            <h3>Karakter Tersimpan</h3>
-            <ul id="character-list">
-                <!-- Character list will be populated by JavaScript -->
-            </ul>
+            <hr class="my-6 border-gray-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-4">Karakter Tersimpan</h3>
+            <ul id="character-list" class="space-y-2">
         </div>
     </div>
 
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- THEME ---
-            const themeSelect = document.getElementById('theme-select');
-            const setTheme = (theme) => {
-                document.documentElement.setAttribute('data-theme', theme);
-                localStorage.setItem('image-gen-theme', theme);
-            };
-            themeSelect.addEventListener('change', () => setTheme(themeSelect.value));
-            const savedTheme = localStorage.getItem('image-gen-theme') || 'dark';
-            themeSelect.value = savedTheme;
-            setTheme(savedTheme);
-
             // --- DOM ELEMENTS ---
             const generateBtn = document.getElementById('generate-btn');
             const copyBtn = document.getElementById('copy-btn');
             const resultPrompt = document.getElementById('result-prompt');
             const copyFeedback = document.getElementById('copy-feedback');
-            const styleTagsContainer = document.getElementById('style-tags-container');
-            const photographerSelect = document.getElementById('photographer-select');
             const japaneseStyleSelect = document.getElementById('japanese-style-select');
+            const colorFilmTypeSelect = document.getElementById('color-film-type-select');
+            const lightConditionsSelect = document.getElementById('light-conditions-select');
             const colorToneSelect = document.getElementById('color-tone-select');
             const lensSelect = document.getElementById('lens-select');
+            const styleSelect = document.getElementById('style-select');
             
             // --- CHARACTER MODAL ELEMENTS ---
             const characterModal = document.getElementById('character-modal');
@@ -835,63 +541,26 @@
             const characterSelect = document.getElementById('character-select');
 
             // --- DATA ---
-            const selectedStyles = new Set();
             let characters = JSON.parse(localStorage.getItem('image-gen-characters')) || [];
-            
+
+            // --- TEMPLATES ---
             const getInitialCharacterTemplate = () => ({
-                gender: "",
-                age: "",
-                ethnicity: "",
-                face: {
-                    shape: "",
-                    skin_tone: "",
-                    eye_color: "",
-                    nose_shape: "",
-                    lip_shape: ""
-                },
-                hair: {
-                    color: "",
-                    style: "",
-                    length: ""
-                },
-                body: {
-                    build: "",
-                    height: ""
-                },
-                clothing: {
-                    style: "",
-                    top: "",
-                    bottom: "",
-                    footwear: ""
-                },
-                distinguishing_features: {
-                    feature_1: "",
-                    feature_2: ""
-                },
-                head_accessory: ""
+                gender: '',
+                age: '',
+                ethnicity: '',
+                face: { shape: '', skin_tone: '', eye_color: '', nose_shape: '', lip_shape: '' },
+                hair: { color: '', style: '', length: '' },
+                body: { build: '', height: '' },
+                clothing: { style: '', top: '', top_custom: '', bottom: '', bottom_custom: '', footwear: '', footwear_custom: '' },
+                distinguishing_features: { feature_1: '', feature_2: '' },
+                head_accessory: ''
             });
 
-            const ids = {
-                action: 'action',
-                setting: 'setting',
-                styleCustom: 'style-custom',
-            };
-
-            const styles = [
-                { category: 'Realistis & Fotografi', tags: [
-                    'Hyperrealistic', 'Photorealistic', 'Analog Style', 'Film Grain', 'Macro Photography', 'Long Exposure', 'Golden Hour Lighting', 'Studio Lighting', '8K', '4K', 'HD', 'DSLR', 'High-Contrast', 'Vibrant Color Palette', 'Muted Color Palette', 'Black and White',
-                    'Fotografi Potret', 'Potret Studio', 'Potret Lingkungan (Environmental Portrait)', 'Potret Candid', 'Potret Gaya Hidup (Lifestyle Portrait)', 'Potret Headshot', 'Potret Keluarga/Grup',
-                    'Fotografi Fashion', 'Editorial Fashion', 'Katalog Fashion', 'Haute Couture Photography', 'Street Style Photography',
-                    'Fotografi Jurnalistik/Dokumenter (berfokus pada manusia)', 'Fotografi Street', 'Fotografi Pernikahan', 'Dokumenter Pernikahan', 'Potret Pernikahan', 'Gaya Hidup Pernikahan',
-                    'Fotografi Olahraga', 'Fotografi Konser/Pertunjukan', 'Fotografi Bayi Baru Lahir (Newborn Photography)'
-                ]},
-                { category: 'Genre & Tema', tags: ['Film Noir', 'Vintage Photo (1950s)', 'Cyberpunk', 'Steampunk', 'Fantasy', 'Sci-Fi', 'Gothic', 'Minimalist']}
-            ];
 
             // --- CHARACTER MANAGEMENT ---
-            const openModal = () => characterModal.style.display = 'block';
+            const openModal = () => characterModal.classList.remove('hidden');
             const closeModal = () => {
-                characterModal.style.display = 'none';
+                characterModal.classList.add('hidden');
                 characterForm.reset();
                 characterIdInput.value = '';
             };
@@ -911,11 +580,12 @@
                     characterSelect.appendChild(option);
 
                     const li = document.createElement('li');
+                    li.className = 'flex justify-between items-center bg-gray-50 p-3 rounded-md border border-gray-200';
                     li.innerHTML = `
-                        <span>${char.name}</span>
-                        <div class="char-actions">
-                            <button class="button edit-btn" data-id="${char.id}">Edit</button>
-                            <button class="button delete-btn" data-id="${char.id}">Hapus</button>
+                        <span class="font-medium text-gray-700">${char.name}</span>
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1 text-sm bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors edit-btn" data-id="${char.id}">Edit</button>
+                            <button class="px-3 py-1 text-sm bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors delete-btn" data-id="${char.id}">Hapus</button>
                         </div>
                     `;
                     characterListUl.appendChild(li);
@@ -1074,53 +744,30 @@
 
 
             // --- RENDER INITIAL UI ---
-            styles.forEach(cat => {
-                const categoryContainer = document.createElement('div');
-                categoryContainer.classList.add('style-category');
-                const categoryTitle = document.createElement('span');
-                categoryTitle.classList.add('style-category-title');
-                categoryTitle.textContent = cat.category;
-                categoryContainer.appendChild(categoryTitle);
-                const tagsWrapper = document.createElement('div');
-                tagsWrapper.classList.add('style-tags-wrapper');
-                cat.tags.forEach(tagText => {
-                    const tag = document.createElement('span');
-                    tag.classList.add('style-tag');
-                    tag.textContent = tagText;
-                    tag.dataset.value = tagText;
-                    tag.addEventListener('click', () => {
-                        if (selectedStyles.has(tagText)) {
-                            selectedStyles.delete(tagText);
-                            tag.classList.remove('selected');
-                        } else {
-                            selectedStyles.add(tagText);
-                            tag.classList.add('selected');
-                        }
-                    });
-                    tagsWrapper.appendChild(tag);
-                });
-                categoryContainer.appendChild(tagsWrapper);
-                styleTagsContainer.appendChild(categoryContainer);
-            });
 
             // --- GENERATE PROMPT ---
             generateBtn.addEventListener('click', () => {
                 const getVal = id => document.getElementById(id).value.trim();
 
-                let selectedStyleArray = Array.from(selectedStyles);
-                const customStyle = getVal(ids.styleCustom);
-                if (customStyle) {
-                    selectedStyleArray = selectedStyleArray.concat(customStyle.split(',').map(s => s.trim()).filter(Boolean));
-                }
-                
-                const photographerStyle = photographerSelect.value;
-                if (photographerStyle) {
-                    selectedStyleArray.push(`in the style of ${photographerStyle}`);
+                const selectedStyleArray = [];
+
+                if (styleSelect.value) {
+                    selectedStyleArray.push(styleSelect.value);
                 }
 
                 const japaneseStyle = japaneseStyleSelect.value;
                 if (japaneseStyle) {
                     selectedStyleArray.push(`in the style of ${japaneseStyle}`);
+                }
+
+                const colorFilmType = colorFilmTypeSelect.value;
+                if (colorFilmType) {
+                    selectedStyleArray.push(`${colorFilmType}`);
+                }
+
+                const lightConditions = lightConditionsSelect.value;
+                if (lightConditions) {
+                    selectedStyleArray.push(`${lightConditions}`);
                 }
 
                 const colorToneStyle = colorToneSelect.value;
@@ -1171,8 +818,8 @@
 
 
                 const visual = promptObject.visual;
-                if (getVal(ids.action)) visual.action = getVal(ids.action);
-                if (getVal(ids.setting)) visual.setting = getVal(ids.setting);
+                if (getVal('action')) visual.action = getVal('action');
+                if (getVal('setting')) visual.setting = getVal('setting');
                 if (selectedStyleArray.length > 0) promptObject.style = selectedStyleArray.join(', ');
 
                 // Clean up empty objects
@@ -1187,8 +834,10 @@
                 if (resultPrompt.value) {
                     navigator.clipboard.writeText(resultPrompt.value).then(() => {
                         copyFeedback.style.opacity = '1';
+                        copyBtn.style.display = 'none';
                         setTimeout(() => {
                             copyFeedback.style.opacity = '0';
+                            copyBtn.style.display = '';
                         }, 2000);
                     });
                 }
