@@ -13,6 +13,7 @@
 
     <div class="container mx-auto w-full max-w-3xl bg-white rounded-xl shadow-lg p-8">
         <h1 class="text-center text-3xl md:text-4xl font-bold text-slate-900 mb-8">Image Generator "WadesinG"</h1>
+        <p class="text-center text-lg font-medium text-blue-600 uppercase tracking-widest -mt-4 mb-8">Photo Edition</p>
 
         <div id="prompt-form" class="grid grid-cols-1 gap-6">
             
@@ -469,23 +470,37 @@
                         </select>
                     </div>
                     <div>
-                        <label for="char-hair-style" class="block text-sm font-medium text-gray-700 mb-1">Gaya Rambut</label>
-                        <select id="char-hair-style" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                            <option value="">-- Pilih --</option>
-                            <option value="Lurus">Lurus</option>
-                            <option value="Bergelombang">Bergelombang</option>
-                            <option value="Keriting">Keriting</option>
-                            <option value="Ikal">Ikal</option>
-                            <option value="Kuncir Kuda">Kuncir Kuda</option>
-                            <option value="Kepang">Kepang</option>
-                            <option value="Cepol">Cepol</option>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Gaya Rambut</label>
+                        <select id="char-hair-style-pria" class="hidden block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                            <option value="">-- Pilih Gaya Rambut Pria --</option>
+                            <option value="Crew Cut (Cepak)">Crew Cut (Cepak)</option>
                             <option value="Undercut">Undercut</option>
-                            <option value="Bob">Bob</option>
-                            <option value="Pixie">Pixie</option>
-                            <option value="Gondrong">Gondrong</option>
+                            <option value="Pompadour">Pompadour</option>
+                            <option value="Slicked Back (Disisir ke Belakang)">Slicked Back (Disisir ke Belakang)</option>
+                            <option value="Spiky (Berdiri)">Spiky (Berdiri)</option>
                             <option value="Mohawk">Mohawk</option>
-                            <option value="Dreadlock">Dreadlock</option>
+                            <option value="Mullet">Mullet</option>
+                            <option value="Gondrong (Panjang)">Gondrong (Panjang)</option>
+                            <option value="Bergelombang Sebahu">Bergelombang Sebahu</option>
+                            <option value="Ikal Pendek">Ikal Pendek</option>
+                            <option value="Afro Pendek">Afro Pendek</option>
+                        </select>
+                        <select id="char-hair-style-wanita" class="hidden block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                            <option value="">-- Pilih Gaya Rambut Wanita --</option>
+                            <option value="Bob Cut">Bob Cut</option>
+                            <option value="Pixie Cut">Pixie Cut</option>
+                            <option value="Shag">Shag</option>
+                            <option value="Layered (Berlapis)">Layered (Berlapis)</option>
+                            <option value="Lurus Panjang">Lurus Panjang</option>
+                            <option value="Bergelombang Panjang">Bergelombang Panjang</option>
+                            <option value="Ikal Panjang">Ikal Panjang</option>
+                            <option value="Ponytail (Kuncir Kuda)">Ponytail (Kuncir Kuda)</option>
+                            <option value="Bun (Cepol)">Bun (Cepol)</option>
+                            <option value="Top Knot (Cepol Atas)">Top Knot (Cepol Atas)</option>
+                            <option value="Braid (Kepang)">Braid (Kepang)</option>
+                            <option value="Cornrows">Cornrows</option>
                             <option value="Afro">Afro</option>
+                            <option value="Poni (Bangs)">Poni (Bangs)</option>
                         </select>
                     </div>
                 </div>
@@ -589,6 +604,8 @@
             const charLipShapeInput = document.getElementById('char-lip-shape');
             const charHairColorInput = document.getElementById('char-hair-color');
             const charHairStyleInput = document.getElementById('char-hair-style');
+            const charHairStylePriaInput = document.getElementById('char-hair-style-pria');
+            const charHairStyleWanitaInput = document.getElementById('char-hair-style-wanita');
             const charHairLengthInput = document.getElementById('char-hair-length');
             const charBodyBuildInput = document.getElementById('char-body-build');
             const charBodyHeightInput = document.getElementById('char-body-height');
@@ -617,6 +634,24 @@
             clothingTopSelect.addEventListener('change', () => toggleCustomInput(clothingTopSelect, clothingTopDetailInput));
             clothingBottomSelect.addEventListener('change', () => toggleCustomInput(clothingBottomSelect, clothingBottomDetailInput));
             clothingFootwearSelect.addEventListener('change', () => toggleCustomInput(clothingFootwearSelect, clothingFootwearDetailInput));
+
+            charGenderInput.addEventListener('input', () => {
+                const gender = charGenderInput.value.toLowerCase();
+                if (gender.startsWith('pria')) {
+                    charHairStylePriaInput.classList.remove('hidden');
+                    charHairStyleWanitaInput.classList.add('hidden');
+                    charHairStyleWanitaInput.value = ''; // Reset value
+                } else if (gender.startsWith('wanita')) {
+                    charHairStyleWanitaInput.classList.remove('hidden');
+                    charHairStylePriaInput.classList.add('hidden');
+                    charHairStylePriaInput.value = ''; // Reset value
+                } else {
+                    charHairStylePriaInput.classList.add('hidden');
+                    charHairStyleWanitaInput.classList.add('hidden');
+                    charHairStylePriaInput.value = '';
+                    charHairStyleWanitaInput.value = '';
+                }
+            });
 
             const characterListUl = document.getElementById('character-list');
             const characterSelect = document.getElementById('character-select');
@@ -687,7 +722,6 @@
                 charNoseShapeInput.value = details.face.nose_shape || '';
                 charLipShapeInput.value = details.face.lip_shape || '';
                 charHairColorInput.value = details.hair.color || '';
-                charHairStyleInput.value = details.hair.style || '';
                 charHairLengthInput.value = details.hair.length || '';
                 charBodyBuildInput.value = details.body.build || '';
                 charBodyHeightInput.value = details.body.height || '';
@@ -731,7 +765,7 @@
                     },
                     hair: {
                         color: charHairColorInput.value.trim(),
-                        style: charHairStyleInput.value.trim(),
+                        style: charHairStylePriaInput.classList.contains('hidden') ? charHairStyleWanitaInput.value.trim() : charHairStylePriaInput.value.trim(),
                         length: charHairLengthInput.value.trim()
                     },
                     body: {
