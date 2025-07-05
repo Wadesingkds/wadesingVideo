@@ -332,6 +332,18 @@
                     <option value="Tilt-Shift Lens">Tilt-Shift Lens (Lensa Tilt-Shift)</option>
                 </select>
             </div>
+            <div class="mb-4">
+                <label for="depth-of-field-select" class="block text-sm font-bold text-gray-700 mb-1">Kedalaman Bidang & Fokus</label>
+                <select id="depth-of-field-select" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    <option value="">-- Tidak ada --</option>
+                    <option value="Shallow Depth of Field">Shallow Depth of Field (Dangkal)</option>
+                    <option value="Deep Focus">Deep Focus (Dalam)</option>
+                    <option value="Soft Focus">Soft Focus (Fokus Lembut)</option>
+                    <option value="Bokeh">Bokeh</option>
+                    <option value="Sharp Focus">Sharp Focus (Fokus Tajam)</option>
+                </select>
+                <input type="text" id="depth-of-field-detail" placeholder="Contoh: Bokeh berbentuk hati, fokus pada mata" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 mt-2">
+            </div>
         </div>
 
         <div class="border-t-2 border-slate-100 my-8"></div>
@@ -607,6 +619,8 @@
             const lightConditionsSelect = document.getElementById('light-conditions-select');
             const colorToneSelect = document.getElementById('color-tone-select');
             const lensSelect = document.getElementById('lens-select');
+            const depthOfFieldSelect = document.getElementById('depth-of-field-select');
+            const depthOfFieldDetailInput = document.getElementById('depth-of-field-detail');
             const styleSelect = document.getElementById('style-select');
             
             // --- CHARACTER MODAL ELEMENTS ---
@@ -908,6 +922,15 @@
                 const lensStyle = lensSelect.value;
                 if (lensStyle) {
                     selectedStyleArray.push(`${lensStyle}`);
+                }
+
+                const depthOfFieldStyle = depthOfFieldSelect.value;
+                if (depthOfFieldStyle) {
+                    let dofValue = depthOfFieldStyle;
+                    if (depthOfFieldDetailInput.value) {
+                        dofValue += ` (${depthOfFieldDetailInput.value})`;
+                    }
+                    selectedStyleArray.push(dofValue);
                 }
 
                 const promptObject = {
