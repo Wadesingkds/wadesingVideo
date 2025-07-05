@@ -28,6 +28,78 @@
                 </div>
             </div>
 
+            <h4 class="text-lg font-semibold text-blue-600 border-b pb-1 mb-4">Pakaian</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label for="clothing-style-select" class="block text-sm font-medium text-gray-700 mb-1">Gaya Pakaian</label>
+                    <select id="clothing-style-select" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">-- Pilih --</option>
+                        <option value="Kasual">Kasual</option>
+                        <option value="Formal">Formal</option>
+                        <option value="Sporty">Sporty</option>
+                        <option value="Bohemian">Bohemian</option>
+                        <option value="Minimalis">Minimalis</option>
+                        <option value="Vintage">Vintage</option>
+                        <option value="Streetwear">Streetwear</option>
+                        <option value="Gothic">Gothic</option>
+                        <option value="Punk">Punk</option>
+                        <option value="Klasik">Klasik</option>
+                        <option value="Modern">Modern</option>
+                        <option value="Futuristik">Futuristik</option>
+                        <option value="Etnik">Etnik</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="clothing-top-select" class="block text-sm font-medium text-gray-700 mb-1">Atasan</label>
+                    <select id="clothing-top-select" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">-- Pilih --</option>
+                        <option value="Kaos">Kaos</option>
+                        <option value="Kemeja">Kemeja</option>
+                        <option value="Blus">Blus</option>
+                        <option value="Sweater">Sweater</option>
+                        <option value="Hoodie">Hoodie</option>
+                        <option value="Jaket">Jaket</option>
+                        <option value="Blazer">Blazer</option>
+                        <option value="Rompi">Rompi</option>
+                        <option value="Tank Top">Tank Top</option>
+                        <option value="Crop Top">Crop Top</option>
+                        </select>
+                    <input type="text" id="clothing-top-detail" placeholder="Contoh: Warna biru, merk XYZ" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 mt-2" style="display: none;">
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label for="clothing-bottom-select" class="block text-sm font-medium text-gray-700 mb-1">Bawahan</label>
+                    <select id="clothing-bottom-select" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">-- Pilih --</option>
+                        <option value="Celana Jeans">Celana Jeans</option>
+                        <option value="Celana Kain">Celana Kain</option>
+                        <option value="Rok Mini">Rok Mini</option>
+                        <option value="Rok Midi">Rok Midi</option>
+                        <option value="Rok Maxi">Rok Maxi</option>
+                        <option value="Celana Pendek">Celana Pendek</option>
+                        <option value="Legging">Legging</option>
+                        <option value="Jogger">Jogger</option>
+                        <option value="Kulot">Kulot</option>
+                        </select>
+                    <input type="text" id="clothing-bottom-detail" placeholder="Contoh: Warna hitam, bahan denim" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 mt-2" style="display: none;">
+                </div>
+                <div>
+                    <label for="clothing-footwear-select" class="block text-sm font-medium text-gray-700 mb-1">Alas Kaki</label>
+                    <select id="clothing-footwear-select" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">-- Pilih --</option>
+                        <option value="Sepatu Kets">Sepatu Kets</option>
+                        <option value="Sepatu Pantofel">Sepatu Pantofel</option>
+                        <option value="Sepatu Hak Tinggi">Sepatu Hak Tinggi</option>
+                        <option value="Sandal">Sandal</option>
+                        <option value="Boots">Boots</option>
+                        <option value="Flat Shoes">Flat Shoes</option>
+                        <option value="Loafers">Loafers</option>
+                        </select>
+                    <input type="text" id="clothing-footwear-detail" placeholder="Contoh: Sepatu kulit hitam, merk Adidas" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 mt-2" style="display: none;">
+                </div>
+            </div>
+
             <div class="mb-4">
                 <label for="action" class="block text-sm font-bold text-gray-700 mb-1">Aksi / Pose</label>
                 <input type="text" id="action" placeholder="Contoh: Berdiri tegap memegang katana" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
@@ -372,80 +444,7 @@
                     </div>
                 </div>
 
-                <h4 class="text-lg font-semibold text-blue-600 border-b pb-1 mb-4">Pakaian</h4>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label for="char-clothing-style" class="block text-sm font-medium text-gray-700 mb-1">Gaya Pakaian</label>
-                        <select id="char-clothing-style" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                            <option value="">-- Pilih --</option>
-                            <option value="Kasual">Kasual</option>
-                            <option value="Formal">Formal</option>
-                            <option value="Sporty">Sporty</option>
-                            <option value="Bohemian">Bohemian</option>
-                            <option value="Minimalis">Minimalis</option>
-                            <option value="Vintage">Vintage</option>
-                            <option value="Streetwear">Streetwear</option>
-                            <option value="Gothic">Gothic</option>
-                            <option value="Punk">Punk</option>
-                            <option value="Klasik">Klasik</option>
-                            <option value="Modern">Modern</option>
-                            <option value="Futuristik">Futuristik</option>
-                            <option value="Etnik">Etnik</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="char-clothing-top" class="block text-sm font-medium text-gray-700 mb-1">Atasan</label>
-                        <select id="char-clothing-top" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                            <option value="">-- Pilih --</option>
-                            <option value="Kaos">Kaos</option>
-                            <option value="Kemeja">Kemeja</option>
-                            <option value="Blus">Blus</option>
-                            <option value="Sweater">Sweater</option>
-                            <option value="Hoodie">Hoodie</option>
-                            <option value="Jaket">Jaket</option>
-                            <option value="Blazer">Blazer</option>
-                            <option value="Rompi">Rompi</option>
-                            <option value="Tank Top">Tank Top</option>
-                            <option value="Crop Top">Crop Top</option>
-                            <option value="User Defined">User Defined</option>
-                        </select>
-                        <input type="text" id="char-clothing-top-custom" placeholder="Masukkan atasan kustom" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 mt-2" style="display: none;">
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label for="char-clothing-bottom" class="block text-sm font-medium text-gray-700 mb-1">Bawahan</label>
-                        <select id="char-clothing-bottom" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                            <option value="">-- Pilih --</option>
-                            <option value="Celana Jeans">Celana Jeans</option>
-                            <option value="Celana Kain">Celana Kain</option>
-                            <option value="Rok Mini">Rok Mini</option>
-                            <option value="Rok Midi">Rok Midi</option>
-                            <option value="Rok Maxi">Rok Maxi</option>
-                            <option value="Celana Pendek">Celana Pendek</option>
-                            <option value="Legging">Legging</option>
-                            <option value="Jogger">Jogger</option>
-                            <option value="Kulot">Kulot</option>
-                            <option value="User Defined">User Defined</option>
-                        </select>
-                        <input type="text" id="char-clothing-bottom-custom" placeholder="Masukkan bawahan kustom" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 mt-2" style="display: none;">
-                    </div>
-                    <div>
-                        <label for="char-clothing-footwear" class="block text-sm font-medium text-gray-700 mb-1">Alas Kaki</label>
-                        <select id="char-clothing-footwear" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                            <option value="">-- Pilih --</option>
-                            <option value="Sepatu Kets">Sepatu Kets</option>
-                            <option value="Sepatu Pantofel">Sepatu Pantofel</option>
-                            <option value="Sepatu Hak Tinggi">Sepatu Hak Tinggi</option>
-                            <option value="Sandal">Sandal</option>
-                            <option value="Boots">Boots</option>
-                            <option value="Flat Shoes">Flat Shoes</option>
-                            <option value="Loafers">Loafers</option>
-                            <option value="User Defined">User Defined</option>
-                        </select>
-                        <input type="text" id="char-clothing-footwear-custom" placeholder="Masukkan alas kaki kustom" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 mt-2" style="display: none;">
-                    </div>
-                </div>
+                
 
                 <div class="mb-4">
                     <label for="char-head-accessory" class="block text-sm font-medium text-gray-700 mb-1">Aksesoris Kepala</label>
@@ -511,20 +510,20 @@
             const charHairLengthInput = document.getElementById('char-hair-length');
             const charBodyBuildInput = document.getElementById('char-body-build');
             const charBodyHeightInput = document.getElementById('char-body-height');
-            const charClothingStyleInput = document.getElementById('char-clothing-style');
-            const charClothingTopInput = document.getElementById('char-clothing-top');
-            const charClothingTopCustomInput = document.getElementById('char-clothing-top-custom');
-            const charClothingBottomInput = document.getElementById('char-clothing-bottom');
-            const charClothingBottomCustomInput = document.getElementById('char-clothing-bottom-custom');
-            const charClothingFootwearInput = document.getElementById('char-clothing-footwear');
-            const charClothingFootwearCustomInput = document.getElementById('char-clothing-footwear-custom');
+            const clothingStyleSelect = document.getElementById('clothing-style-select');
+            const clothingTopSelect = document.getElementById('clothing-top-select');
+            const clothingTopDetailInput = document.getElementById('clothing-top-detail');
+            const clothingBottomSelect = document.getElementById('clothing-bottom-select');
+            const clothingBottomDetailInput = document.getElementById('clothing-bottom-detail');
+            const clothingFootwearSelect = document.getElementById('clothing-footwear-select');
+            const clothingFootwearDetailInput = document.getElementById('clothing-footwear-detail');
             const charFeature1Input = document.getElementById('char-feature-1');
             const charFeature2Input = document.getElementById('char-feature-2');
             const charHeadAccessoryInput = document.getElementById('char-head-accessory');
 
             // Helper function to toggle custom input visibility
             const toggleCustomInput = (selectElement, customInputElement) => {
-                if (selectElement.value === 'User Defined') {
+                if (selectElement.value !== '') {
                     customInputElement.style.display = 'block';
                 } else {
                     customInputElement.style.display = 'none';
@@ -533,9 +532,9 @@
             };
 
             // Add event listeners for clothing dropdowns
-            charClothingTopInput.addEventListener('change', () => toggleCustomInput(charClothingTopInput, charClothingTopCustomInput));
-            charClothingBottomInput.addEventListener('change', () => toggleCustomInput(charClothingBottomInput, charClothingBottomCustomInput));
-            charClothingFootwearInput.addEventListener('change', () => toggleCustomInput(charClothingFootwearInput, charClothingFootwearCustomInput));
+            clothingTopSelect.addEventListener('change', () => toggleCustomInput(clothingTopSelect, clothingTopDetailInput));
+            clothingBottomSelect.addEventListener('change', () => toggleCustomInput(clothingBottomSelect, clothingBottomDetailInput));
+            clothingFootwearSelect.addEventListener('change', () => toggleCustomInput(clothingFootwearSelect, clothingFootwearDetailInput));
 
             const characterListUl = document.getElementById('character-list');
             const characterSelect = document.getElementById('character-select');
@@ -610,18 +609,7 @@
                 charHairLengthInput.value = details.hair.length || '';
                 charBodyBuildInput.value = details.body.build || '';
                 charBodyHeightInput.value = details.body.height || '';
-                charClothingStyleInput.value = details.clothing.style || '';
-                charClothingTopInput.value = details.clothing.top || '';
-                charClothingTopCustomInput.value = details.clothing.top_custom || '';
-                toggleCustomInput(charClothingTopInput, charClothingTopCustomInput);
-
-                charClothingBottomInput.value = details.clothing.bottom || '';
-                charClothingBottomCustomInput.value = details.clothing.bottom_custom || '';
-                toggleCustomInput(charClothingBottomInput, charClothingBottomCustomInput);
-
-                charClothingFootwearInput.value = details.clothing.footwear || '';
-                charClothingFootwearCustomInput.value = details.clothing.footwear_custom || '';
-                toggleCustomInput(charClothingFootwearInput, charClothingFootwearCustomInput);
+                
                 charFeature1Input.value = details.distinguishing_features.feature_1 || '';
                 charFeature2Input.value = details.distinguishing_features.feature_2 || '';
                 charHeadAccessoryInput.value = details.head_accessory || '';
@@ -668,15 +656,7 @@
                         build: charBodyBuildInput.value.trim(),
                         height: charBodyHeightInput.value.trim()
                     },
-                    clothing: {
-                        style: charClothingStyleInput.value.trim(),
-                        top: charClothingTopInput.value.trim() === 'User Defined' ? charClothingTopCustomInput.value.trim() : charClothingTopInput.value.trim(),
-                        top_custom: charClothingTopInput.value.trim() === 'User Defined' ? charClothingTopCustomInput.value.trim() : '',
-                        bottom: charClothingBottomInput.value.trim() === 'User Defined' ? charClothingBottomCustomInput.value.trim() : charClothingBottomInput.value.trim(),
-                        bottom_custom: charClothingBottomInput.value.trim() === 'User Defined' ? charClothingBottomCustomInput.value.trim() : '',
-                        footwear: charClothingFootwearInput.value.trim() === 'User Defined' ? charClothingFootwearCustomInput.value.trim() : charClothingFootwearInput.value.trim(),
-                        footwear_custom: charClothingFootwearInput.value.trim() === 'User Defined' ? charClothingFootwearCustomInput.value.trim() : ''
-                    },
+                    
                     distinguishing_features: {
                         feature_1: charFeature1Input.value.trim(),
                         feature_2: charFeature2Input.value.trim()
@@ -793,6 +773,35 @@
                 const promptObject = {
                     visual: {}
                 };
+
+                // --- CLOTHING INTEGRATION ---
+                const clothing = {};
+                if (clothingStyleSelect.value) clothing.style = clothingStyleSelect.value;
+                if (clothingTopSelect.value) {
+                    let topValue = clothingTopSelect.value;
+                    if (clothingTopDetailInput.value) {
+                        topValue += ` (${clothingTopDetailInput.value})`;
+                    }
+                    clothing.top = topValue;
+                }
+                if (clothingBottomSelect.value) {
+                    let bottomValue = clothingBottomSelect.value;
+                    if (clothingBottomDetailInput.value) {
+                        bottomValue += ` (${clothingBottomDetailInput.value})`;
+                    }
+                    clothing.bottom = bottomValue;
+                }
+                if (clothingFootwearSelect.value) {
+                    let footwearValue = clothingFootwearSelect.value;
+                    if (clothingFootwearDetailInput.value) {
+                        footwearValue += ` (${clothingFootwearDetailInput.value})`;
+                    }
+                    clothing.footwear = footwearValue;
+                }
+
+                if (Object.keys(clothing).length > 0) {
+                    promptObject.visual.clothing = clothing;
+                }
 
                 // --- SUBJECT & CHARACTER INTEGRATION ---
                 const selectedCharId = characterSelect.value;
