@@ -100,6 +100,88 @@
                 </div>
             </div>
 
+            <!-- Ekspresi & Emosi -->
+            <h4 class="text-lg font-semibold text-blue-600 border-b pb-1 mb-4">Ekspresi & Emosi</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label for="facial-expression-select" class="block text-sm font-medium text-gray-700 mb-1">Ekspresi Wajah</label>
+                    <select id="facial-expression-select" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">-- Pilih --</option>
+                        <option value="Senyum bahagia">Senyum bahagia</option>
+                        <option value="Tersenyum simpul">Tersenyum simpul</option>
+                        <option value="Tertawa">Tertawa</option>
+                        <option value="Gembira">Gembira</option>
+                        <option value="Terkekeh">Terkekeh</option>
+                        <option value="Puas">Puas</option>
+                        <option value="Bangga">Bangga</option>
+                        <option value="Sedih">Sedih</option>
+                        <option value="Menangis">Menangis</option>
+                        <option value="Murung">Murung</option>
+                        <option value="Kecewa">Kecewa</option>
+                        <option value="Khawatir">Khawatir</option>
+                        <option value="Terkejut">Terkejut</option>
+                        <option value="Kaget">Kaget</option>
+                        <option value="Takut">Takut</option>
+                        <option value="Kagum">Kagum</option>
+                        <option value="Marah">Marah</option>
+                        <option value="Jengkel">Jengkel</option>
+                        <option value="Jijik">Jijik</option>
+                        <option value="Mencemooh">Mencemooh</option>
+                        <option value="Netral">Netral</option>
+                        <option value="Berpikir">Berpikir</option>
+                        <option value="Bingung">Bingung</option>
+                        <option value="Penasaran">Penasaran</option>
+                        <option value="Serius">Serius</option>
+                    </select>
+                    <input type="text" id="facial-expression-detail" placeholder="Detail atau ekspresi custom..." class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 mt-2">
+                </div>
+                <div>
+                    <label for="emotion-select" class="block text-sm font-medium text-gray-700 mb-1">Emosi</label>
+                    <select id="emotion-select" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">-- Pilih --</option>
+                        <option value="Gembira">Gembira</option>
+                        <option value="Sedih">Sedih</option>
+                        <option value="Marah">Marah</option>
+                        <option value="Takut">Takut</option>
+                        <option value="Terkejut">Terkejut</option>
+                        <option value="Jijik">Jijik</option>
+                        <option value="Senang">Senang</option>
+                        <option value="Tertawa">Tertawa</option>
+                        <option value="Cinta">Cinta</option>
+                        <option value="Bangga">Bangga</option>
+                        <option value="Puas">Puas</option>
+                        <option value="Kagum">Kagum</option>
+                        <option value="Penasaran">Penasaran</option>
+                        <option value="Bingung">Bingung</option>
+                        <option value="Khawatir">Khawatir</option>
+                        <option value="Cemas">Cemas</option>
+                        <option value="Kecewa">Kecewa</option>
+                        <option value="Frustrasi">Frustrasi</option>
+                        <option value="Jengkel">Jengkel</option>
+                        <option value="Malu">Malu</option>
+                        <option value="Bersalah">Bersalah</option>
+                        <option value="Iri / Cemburu">Iri / Cemburu</option>
+                        <option value="Harapan">Harapan</option>
+                        <option value="Bosan">Bosan</option>
+                        <option value="Serius">Serius</option>
+                        <option value="Netral">Netral</option>
+                    </select>
+                    <input type="text" id="emotion-detail" placeholder="Detail atau emosi custom..." class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 mt-2">
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label for="emotion-intensity-select" class="block text-sm font-medium text-gray-700 mb-1">Intensitas Emosi</label>
+                <select id="emotion-intensity-select" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    <option value="">-- Pilih --</option>
+                    <option value="Rendah">Rendah (Subtle)</option>
+                    <option value="Sedang">Sedang (Moderate)</option>
+                    <option value="Tinggi">Tinggi (Intense)</option>
+                    <option value="Sangat Tinggi">Sangat Tinggi (Extreme)</option>
+                </select>
+                <input type="text" id="emotion-intensity-detail" placeholder="Detail atau intensitas custom..." class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 mt-2">
+            </div>
+
             <div class="mb-4">
                 <label for="action" class="block text-sm font-bold text-gray-700 mb-1">Aksi / Pose</label>
                 <input type="text" id="action" placeholder="Contoh: Berdiri tegap memegang katana" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
@@ -802,6 +884,20 @@
                 if (Object.keys(clothing).length > 0) {
                     promptObject.visual.clothing = clothing;
                 }
+
+                // --- EXPRESSION & EMOTION INTEGRATION ---
+                const expression = {};
+                if (getVal('facial-expression-select')) expression.facial = getVal('facial-expression-select');
+                if (getVal('facial-expression-detail')) expression.facial_detail = getVal('facial-expression-detail');
+                if (getVal('emotion-select')) expression.emotion = getVal('emotion-select');
+                if (getVal('emotion-detail')) expression.emotion_detail = getVal('emotion-detail');
+                if (getVal('emotion-intensity-select')) expression.intensity = getVal('emotion-intensity-select');
+                if (getVal('emotion-intensity-detail')) expression.intensity_detail = getVal('emotion-intensity-detail');
+
+                if (Object.keys(expression).length > 0) {
+                    promptObject.visual.expression = expression;
+                }
+
 
                 // --- SUBJECT & CHARACTER INTEGRATION ---
                 const selectedCharId = characterSelect.value;
