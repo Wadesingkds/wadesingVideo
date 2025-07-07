@@ -626,7 +626,7 @@
             const depthOfFieldSelect = document.getElementById('depth-of-field-select');
             const depthOfFieldDetailInput = document.getElementById('depth-of-field-detail');
             const styleSelect = document.getElementById('style-select');
-            
+
             // --- CHARACTER MODAL ELEMENTS ---
             const characterModal = document.getElementById('character-modal');
             const manageCharactersBtn = document.getElementById('manage-characters-btn');
@@ -645,7 +645,6 @@
             const charNoseShapeInput = document.getElementById('char-nose-shape');
             const charLipShapeInput = document.getElementById('char-lip-shape');
             const charHairColorInput = document.getElementById('char-hair-color');
-            const charHairStyleInput = document.getElementById('char-hair-style');
             const charHairStylePriaInput = document.getElementById('char-hair-style-pria');
             const charHairStyleWanitaInput = document.getElementById('char-hair-style-wanita');
             const charHairLengthInput = document.getElementById('char-hair-length');
@@ -661,45 +660,39 @@
             const charFeature1Input = document.getElementById('char-feature-1');
             const charFeature2Input = document.getElementById('char-feature-2');
             const charHeadAccessoryInput = document.getElementById('char-head-accessory');
+            const characterListUl = document.getElementById('character-list');
+            const characterSelect = document.getElementById('character-select');
 
-            // Helper function to toggle custom input visibility
+            // --- DATA ---
+            let characters = JSON.parse(localStorage.getItem('image-gen-characters')) || [];
+
+            // --- HELPER FUNCTIONS ---
             const toggleCustomInput = (selectElement, customInputElement) => {
                 if (selectElement.value !== '') {
                     customInputElement.style.display = 'block';
                 } else {
                     customInputElement.style.display = 'none';
-                    customInputElement.value = ''; // Clear custom input when not 'User Defined'
+                    customInputElement.value = '';
                 }
             };
 
-            // Add event listeners for clothing dropdowns
-            clothingTopSelect.addEventListener('change', () => toggleCustomInput(clothingTopSelect, clothingTopDetailInput));
-            clothingBottomSelect.addEventListener('change', () => toggleCustomInput(clothingBottomSelect, clothingBottomDetailInput));
-            clothingFootwearSelect.addEventListener('change', () => toggleCustomInput(clothingFootwearSelect, clothingFootwearDetailInput));
-
-            charGenderInput.addEventListener('input', () => {
+            const updateHairStyleVisibility = () => {
                 const gender = charGenderInput.value.toLowerCase();
                 if (gender.startsWith('pria')) {
                     charHairStylePriaInput.classList.remove('hidden');
                     charHairStyleWanitaInput.classList.add('hidden');
-                    charHairStyleWanitaInput.value = ''; // Reset value
+                    charHairStyleWanitaInput.value = '';
                 } else if (gender.startsWith('wanita')) {
                     charHairStyleWanitaInput.classList.remove('hidden');
                     charHairStylePriaInput.classList.add('hidden');
-                    charHairStylePriaInput.value = ''; // Reset value
+                    charHairStylePriaInput.value = '';
                 } else {
                     charHairStylePriaInput.classList.add('hidden');
                     charHairStyleWanitaInput.classList.add('hidden');
                     charHairStylePriaInput.value = '';
                     charHairStyleWanitaInput.value = '';
                 }
-            });
-
-            const characterListUl = document.getElementById('character-list');
-            const characterSelect = document.getElementById('character-select');
-
-            // --- DATA ---
-            let characters = JSON.parse(localStorage.getItem('image-gen-characters')) || [];
+            };
 
             // --- TEMPLATES ---
             const getInitialCharacterTemplate = () => ({
@@ -714,13 +707,13 @@
                 head_accessory: ''
             });
 
-
             // --- CHARACTER MANAGEMENT ---
             const openModal = () => characterModal.classList.remove('hidden');
             const closeModal = () => {
                 characterModal.classList.add('hidden');
                 characterForm.reset();
                 characterIdInput.value = '';
+                updateHairStyleVisibility(); // Hide dropdowns when closing
             };
 
             const saveCharacters = () => {
@@ -730,7 +723,6 @@
             const renderCharacters = () => {
                 characterListUl.innerHTML = '';
                 characterSelect.innerHTML = '<option value="">-- Tanpa Karakter --</option>';
-                
                 characters.forEach(char => {
                     const option = document.createElement('option');
                     option.value = char.id;
@@ -751,6 +743,7 @@
             };
 
             const populateCharacterForm = (charData) => {
+                characterForm.reset(); // Reset form first
                 characterIdInput.value = charData.id || '';
                 characterNameInput.value = charData.name || '';
                 const details = JSON.parse(charData.details || JSON.stringify(getInitialCharacterTemplate()));
@@ -758,24 +751,52 @@
                 charGenderInput.value = details.gender || '';
                 charAgeInput.value = details.age || '';
                 charEthnicityInput.value = details.ethnicity || '';
-                charFaceShapeInput.value = details.face.shape || '';
-                charSkinToneInput.value = details.face.skin_tone || '';
-                charEyeColorInput.value = details.face.eye_color || '';
-                charNoseShapeInput.value = details.face.nose_shape || '';
-                charLipShapeInput.value = details.face.lip_shape || '';
-                charHairColorInput.value = details.hair.color || '';
-                charHairLengthInput.value = details.hair.length || '';
-                charBodyBuildInput.value = details.body.build || '';
-                charBodyHeightInput.value = details.body.height || '';
                 
-                charFeature1Input.value = details.distinguishing_features.feature_1 || '';
-                charFeature2Input.value = details.distinguishing_features.feature_2 || '';
+                if(details.face) {
+                    charFaceShapeInput.value = details.face.shape || '';
+                    charSkinToneInput.value = details.face.skin_tone || '';
+                    charEyeColorInput.value = details.face.eye_color || '';
+                    charNoseShapeInput.value = details.face.nose_shape || '';
+                    charLipShapeInput.value = details.face.lip_shape || '';
+                }
+
+                if(details.hair) {
+                    charHairColorInput.value = details.hair.color || '';
+                    charHairLengthInput.value = details.hair.length || '';
+                    // Set the correct dropdown's value after checking gender
+                    if (details.gender && details.hair.style) {
+                        if (details.gender.toLowerCase().startsWith('pria')) {
+                            charHairStylePriaInput.value = details.hair.style;
+                        } else if (details.gender.toLowerCase().startsWith('wanita')) {
+                            charHairStyleWanitaInput.value = details.hair.style;
+                        }
+                    }
+                }
+
+                if(details.body){
+                    charBodyBuildInput.value = details.body.build || '';
+                    charBodyHeightInput.value = details.body.height || '';
+                }
+                
+                if(details.distinguishing_features){
+                    charFeature1Input.value = details.distinguishing_features.feature_1 || '';
+                    charFeature2Input.value = details.distinguishing_features.feature_2 || '';
+                }
+
                 charHeadAccessoryInput.value = details.head_accessory || '';
+
+                // IMPORTANT: Update visibility after populating form
+                updateHairStyleVisibility();
             };
 
+            // --- EVENT LISTENERS ---
+            clothingTopSelect.addEventListener('change', () => toggleCustomInput(clothingTopSelect, clothingTopDetailInput));
+            clothingBottomSelect.addEventListener('change', () => toggleCustomInput(clothingBottomSelect, clothingBottomDetailInput));
+            clothingFootwearSelect.addEventListener('change', () => toggleCustomInput(clothingFootwearSelect, clothingFootwearDetailInput));
+            charGenderInput.addEventListener('input', updateHairStyleVisibility);
+
             manageCharactersBtn.addEventListener('click', () => {
-                characterForm.reset();
-                populateCharacterForm({ details: JSON.stringify(getInitialCharacterTemplate()) }); // Load initial template
+                populateCharacterForm({ details: JSON.stringify(getInitialCharacterTemplate()) });
                 openModal();
             });
 
@@ -788,7 +809,6 @@
                 e.preventDefault();
                 const id = characterIdInput.value;
                 const name = characterNameInput.value.trim();
-
                 if (!name) {
                     alert('Nama Karakter tidak boleh kosong.');
                     return;
@@ -814,7 +834,6 @@
                         build: charBodyBuildInput.value.trim(),
                         height: charBodyHeightInput.value.trim()
                     },
-                    
                     distinguishing_features: {
                         feature_1: charFeature1Input.value.trim(),
                         feature_2: charFeature2Input.value.trim()
@@ -822,9 +841,8 @@
                     head_accessory: charHeadAccessoryInput.value.trim()
                 };
 
-                // Clean up empty nested objects/properties before saving
                 for (const key in details) {
-                    if (typeof details[key] === 'object' && !Array.isArray(details[key])) {
+                    if (typeof details[key] === 'object' && details[key] !== null && !Array.isArray(details[key])) {
                         let allEmpty = true;
                         for (const subKey in details[key]) {
                             if (details[key][subKey]) {
@@ -840,13 +858,13 @@
 
                 const detailsJsonString = JSON.stringify(details, null, 2);
 
-                if (id) { // Editing existing
+                if (id) {
                     const charIndex = characters.findIndex(c => c.id == id);
                     if (charIndex > -1) {
                         characters[charIndex].name = name;
                         characters[charIndex].details = detailsJsonString;
                     }
-                } else { // Creating new
+                } else {
                     characters.push({
                         id: Date.now().toString(),
                         name: name,
@@ -872,7 +890,8 @@
                 }
 
                 if (e.target.classList.contains('delete-btn')) {
-                    if (confirm(`Apakah Anda yakin ingin menghapus karakter "${characters.find(c=>c.id===id).name}"?`)) {
+                    const charName = characters.find(c => c.id === id)?.name || 'karakter ini';
+                    if (confirm(`Apakah Anda yakin ingin menghapus karakter "${charName}"?`)) {
                         characters = characters.filter(c => c.id !== id);
                         saveCharacters();
                         renderCharacters();
@@ -880,97 +899,48 @@
                 }
             });
 
-
-            // --- RENDER INITIAL UI ---
-
-            // --- GENERATE PROMPT ---
             generateBtn.addEventListener('click', () => {
                 const getVal = id => document.getElementById(id).value.trim();
-
                 const selectedStyleArray = [];
 
-                if (styleSelect.value) {
-                    selectedStyleArray.push(styleSelect.value);
-                }
+                if (styleSelect.value) selectedStyleArray.push(styleSelect.value);
+                if (japaneseStyleSelect.value) selectedStyleArray.push(`in the style of ${japaneseStyleSelect.value}`);
+                if (colorFilmTypeSelect.value) selectedStyleArray.push(colorFilmTypeSelect.value);
+                if (lightConditionsSelect.value) selectedStyleArray.push(lightConditionsSelect.value);
+                if (colorToneSelect.value) selectedStyleArray.push(colorToneSelect.value);
+                if (getVal('angle-select')) selectedStyleArray.push(`${getVal('angle-select')} Shot`);
+                if (getVal('camera-type-select')) selectedStyleArray.push(`Shot with ${getVal('camera-type-select')}`);
+                if (lensSelect.value) selectedStyleArray.push(lensSelect.value);
 
-                const japaneseStyle = japaneseStyleSelect.value;
-                if (japaneseStyle) {
-                    selectedStyleArray.push(`in the style of ${japaneseStyle}`);
-                }
-
-                const colorFilmType = colorFilmTypeSelect.value;
-                if (colorFilmType) {
-                    selectedStyleArray.push(`${colorFilmType}`);
-                }
-
-                const lightConditions = lightConditionsSelect.value;
-                if (lightConditions) {
-                    selectedStyleArray.push(`${lightConditions}`);
-                }
-
-                const colorToneStyle = colorToneSelect.value;
-                if (colorToneStyle) {
-                    selectedStyleArray.push(`${colorToneStyle}`);
-                }
-
-                const angleStyle = getVal('angle-select');
-                if (angleStyle) {
-                    selectedStyleArray.push(`${angleStyle} Shot`);
-                }
-
-                const cameraTypeStyle = getVal('camera-type-select');
-                if (cameraTypeStyle) {
-                    selectedStyleArray.push(`Shot with ${cameraTypeStyle}`);
-                }
-
-                const lensStyle = lensSelect.value;
-                if (lensStyle) {
-                    selectedStyleArray.push(`${lensStyle}`);
-                }
-
-                const depthOfFieldStyle = depthOfFieldSelect.value;
-                if (depthOfFieldStyle) {
-                    let dofValue = depthOfFieldStyle;
+                if (depthOfFieldSelect.value) {
+                    let dofValue = depthOfFieldSelect.value;
                     if (depthOfFieldDetailInput.value) {
                         dofValue += ` (${depthOfFieldDetailInput.value})`;
                     }
                     selectedStyleArray.push(dofValue);
                 }
 
-                const promptObject = {
-                    visual: {}
-                };
+                const promptObject = { visual: {} };
 
-                // --- CLOTHING INTEGRATION ---
                 const clothing = {};
                 if (clothingStyleSelect.value) clothing.style = clothingStyleSelect.value;
                 if (clothingTopSelect.value) {
                     let topValue = clothingTopSelect.value;
-                    if (clothingTopDetailInput.value) {
-                        topValue += ` (${clothingTopDetailInput.value})`;
-                    }
+                    if (clothingTopDetailInput.value) topValue += ` (${clothingTopDetailInput.value})`;
                     clothing.top = topValue;
                 }
                 if (clothingBottomSelect.value) {
                     let bottomValue = clothingBottomSelect.value;
-                    if (clothingBottomDetailInput.value) {
-                        bottomValue += ` (${clothingBottomDetailInput.value})`;
-                    }
+                    if (clothingBottomDetailInput.value) bottomValue += ` (${clothingBottomDetailInput.value})`;
                     clothing.bottom = bottomValue;
                 }
                 if (clothingFootwearSelect.value) {
                     let footwearValue = clothingFootwearSelect.value;
-                    if (clothingFootwearDetailInput.value) {
-                        footwearValue += ` (${clothingFootwearDetailInput.value})`;
-                    }
+                    if (clothingFootwearDetailInput.value) footwearValue += ` (${clothingFootwearDetailInput.value})`;
                     clothing.footwear = footwearValue;
                 }
+                if (Object.keys(clothing).length > 0) promptObject.visual.clothing = clothing;
 
-                if (Object.keys(clothing).length > 0) {
-                    promptObject.visual.clothing = clothing;
-                }
-
-                // --- EXPRESSION & EMOTION INTEGRATION ---
                 const expression = {};
                 if (getVal('facial-expression-select')) expression.facial = getVal('facial-expression-select');
                 if (getVal('facial-expression-detail')) expression.facial_detail = getVal('facial-expression-detail');
@@ -978,48 +948,35 @@
                 if (getVal('emotion-detail')) expression.emotion_detail = getVal('emotion-detail');
                 if (getVal('emotion-intensity-select')) expression.intensity = getVal('emotion-intensity-select');
                 if (getVal('emotion-intensity-detail')) expression.intensity_detail = getVal('emotion-intensity-detail');
+                if (Object.keys(expression).length > 0) promptObject.visual.expression = expression;
 
-                if (Object.keys(expression).length > 0) {
-                    promptObject.visual.expression = expression;
-                }
-
-
-                // --- SUBJECT & CHARACTER INTEGRATION ---
                 const selectedCharId = characterSelect.value;
                 if (selectedCharId) {
                     const char = characters.find(c => c.id === selectedCharId);
                     if (char) {
                         try {
                             const charDetails = JSON.parse(char.details);
-                            const fullSubject = {
+                            promptObject.visual.subject = {
                                 "nama_karakter": char.name,
                                 "karakter_konsisten": charDetails
                             };
-                            promptObject.visual.subject = fullSubject;
                         } catch (e) {
                             console.error("Error parsing character JSON:", e);
-                            // Fallback: if JSON is invalid, just use character name as subject
                             promptObject.visual.subject = char.name;
                         }
                     }
-                } else {
-                    // If no character selected, visual.subject will be omitted
                 }
 
-
-                const visual = promptObject.visual;
-                if (getVal('action')) visual.action = getVal('action');
-                if (getVal('setting')) visual.setting = getVal('setting');
+                if (getVal('action')) promptObject.visual.action = getVal('action');
+                if (getVal('setting')) promptObject.visual.setting = getVal('setting');
                 if (selectedStyleArray.length > 0) promptObject.style = selectedStyleArray.join(', ');
 
-                // Clean up empty objects
                 if (Object.keys(promptObject.visual).length === 0) delete promptObject.visual;
                 if (!promptObject.style) delete promptObject.style;
 
                 resultPrompt.value = JSON.stringify(promptObject, null, 2);
             });
 
-            // --- COPY BUTTON ---
             copyBtn.addEventListener('click', () => {
                 if (resultPrompt.value) {
                     navigator.clipboard.writeText(resultPrompt.value).then(() => {
