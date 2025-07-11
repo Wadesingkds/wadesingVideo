@@ -1,999 +1,787 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Generator "WadesinG"</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
+     <title>Video Prompt Generator</title>
+
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+     <meta name="description" content="">
+     <meta name="keywords" content="">
+     <meta name="author" content="">
+     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+     <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+     <link rel="stylesheet" href="assets/css/aos.css">
+     <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+     <link rel="stylesheet" href="assets/css/owl.theme.default.min.css">
+
+     <!-- MAIN CSS -->
+     <link rel="stylesheet" href="assets/css/templatemo-digital-trend.css">
+
+     <style>
+        .form-section {
+            background-color: rgba(255,255,255,0.8);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        .form-section h3 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .form-control {
+            background-color: rgba(255,255,255,0.9);
+            color: #333;
+            border: 1px solid #ccc;
+        }
+        .form-control:focus {
+            background-color: #fff;
+            color: #333;
+            border-color: #80bdff;
+            box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+        }
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+        }
+        .checkbox-label {
+            display: inline-block;
+            margin-left: 5px;
+            font-weight: normal;
+        }
+        .suggestion-text {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+            display: block;
+        }
+        #generatedJson {
+            background-color: #f2f2f2; /* Light gray background */
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: left;
+            white-space: pre-wrap;
+            color: #333;
+        }
+        .dialogue-entry {
+            border: 1px solid #eee;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            background-color: rgba(255,255,255,0.7);
+            position: relative;
+        }
+        .remove-dialogue-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding: 3px 8px;
+            font-size: 0.8em;
+            cursor: pointer;
+        }
+     </style>
+
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans p-8 flex justify-center items-start min-h-screen">
+<body>
 
-    <div class="container mx-auto w-full max-w-3xl bg-white rounded-xl shadow-lg p-8">
-        <h1 class="text-center text-3xl md:text-4xl font-bold text-slate-900 mb-8">Image Generator "WadesinG"</h1>
-        <p class="text-center text-lg font-medium text-blue-600 uppercase tracking-widest -mt-4 mb-8">Photo Edition</p>
+    <noscript>
+      <div style="color: red; text-align: center;">
+        This site requires JavaScript to work. Please enable JavaScript.
+      </div>
+    </noscript>
 
-        <div id="prompt-form" class="grid grid-cols-1 gap-6">
-            
-            
-
-            <div class="mb-4">
-                <label for="character-select" class="block text-sm font-bold text-gray-700 mb-1">Pilih Karakter</label>
-                <div class="flex gap-4">
-                    <select id="character-select" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 flex-grow">
-                        <option value="">-- Tanpa Karakter --</option>
-                    </select>
-                    <button id="manage-characters-btn" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors">Kelola</button>
-                </div>
-            </div>
-
-            <h4 class="text-lg font-semibold text-blue-600 border-b pb-1 mb-4">Pakaian</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div>
-                    <label for="clothing-style-select" class="block text-sm font-medium text-gray-700 mb-1">Gaya Pakaian</label>
-                    <select id="clothing-style-select" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                        <option value="">-- Pilih --</option>
-                        <option value="Kasual">Kasual</option>
-                        <option value="Formal">Formal</option>
-                        <option value="Sporty">Sporty</option>
-                        <option value="Bohemian">Bohemian</option>
-                        <option value="Minimalis">Minimalis</option>
-                        <option value="Vintage">Vintage</option>
-                        <option value="Streetwear">Streetwear</option>
-                        <option value="Gothic">Gothic</option>
-                        <option value="Punk">Punk</option>
-                        <option value="Klasik">Klasik</option>
-                        <option value="Modern">Modern</option>
-                        <option value="Futuristik">Futuristik</option>
-                        <option value="Etnik">Etnik</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="clothing-top-select" class="block text-sm font-medium text-gray-700 mb-1">Atasan</label>
-                    <select id="clothing-top-select" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                        <option value="">-- Pilih --</option>
-                        <option value="Kaos">Kaos</option>
-                        <option value="Kemeja">Kemeja</option>
-                        <option value="Blus">Blus</option>
-                        <option value="Sweater">Sweater</option>
-                        <option value="Hoodie">Hoodie</option>
-                        <option value="Jaket">Jaket</option>
-                        <option value="Blazer">Blazer</option>
-                        <option value="Rompi">Rompi</option>
-                        <option value="Tank Top">Tank Top</option>
-                        <option value="Crop Top">Crop Top</option>
-                        </select>
-                    <input type="text" id="clothing-top-detail" placeholder="Contoh: Warna biru, merk XYZ" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 mt-2" style="display: none;">
-                </div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div>
-                    <label for="clothing-bottom-select" class="block text-sm font-medium text-gray-700 mb-1">Bawahan</label>
-                    <select id="clothing-bottom-select" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                        <option value="">-- Pilih --</option>
-                        <option value="Celana Jeans">Celana Jeans</option>
-                        <option value="Celana Kain">Celana Kain</option>
-                        <option value="Rok Mini">Rok Mini</option>
-                        <option value="Rok Midi">Rok Midi</option>
-                        <option value="Rok Maxi">Rok Maxi</option>
-                        <option value="Celana Pendek">Celana Pendek</option>
-                        <option value="Legging">Legging</option>
-                        <option value="Jogger">Jogger</option>
-                        <option value="Kulot">Kulot</option>
-                        </select>
-                    <input type="text" id="clothing-bottom-detail" placeholder="Contoh: Warna hitam, bahan denim" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 mt-2" style="display: none;">
-                </div>
-                <div>
-                    <label for="clothing-footwear-select" class="block text-sm font-medium text-gray-700 mb-1">Alas Kaki</label>
-                    <select id="clothing-footwear-select" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                        <option value="">-- Pilih --</option>
-                        <option value="Sepatu Kets">Sepatu Kets</option>
-                        <option value="Sepatu Pantofel">Sepatu Pantofel</option>
-                        <option value="Sepatu Hak Tinggi">Sepatu Hak Tinggi</option>
-                        <option value="Sandal">Sandal</option>
-                        <option value="Boots">Boots</option>
-                        <option value="Flat Shoes">Flat Shoes</option>
-                        <option value="Loafers">Loafers</option>
-                        </select>
-                    <input type="text" id="clothing-footwear-detail" placeholder="Contoh: Sepatu kulit hitam, merk Adidas" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 mt-2" style="display: none;">
-                </div>
-            </div>
-
-            <!-- Ekspresi & Emosi -->
-            <h4 class="text-lg font-semibold text-blue-600 border-b pb-1 mb-4">Ekspresi & Emosi</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div>
-                    <label for="facial-expression-select" class="block text-sm font-medium text-gray-700 mb-1">Ekspresi Wajah</label>
-                    <select id="facial-expression-select" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                        <option value="">-- Pilih --</option>
-                        <option value="Senyum bahagia">Senyum bahagia</option>
-                        <option value="Tersenyum simpul">Tersenyum simpul</option>
-                        <option value="Tertawa">Tertawa</option>
-                        <option value="Gembira">Gembira</option>
-                        <option value="Terkekeh">Terkekeh</option>
-                        <option value="Puas">Puas</option>
-                        <option value="Bangga">Bangga</option>
-                        <option value="Sedih">Sedih</option>
-                        <option value="Menangis">Menangis</option>
-                        <option value="Murung">Murung</option>
-                        <option value="Kecewa">Kecewa</option>
-                        <option value="Khawatir">Khawatir</option>
-                        <option value="Terkejut">Terkejut</option>
-                        <option value="Kaget">Kaget</option>
-                        <option value="Takut">Takut</option>
-                        <option value="Kagum">Kagum</option>
-                        <option value="Marah">Marah</option>
-                        <option value="Jengkel">Jengkel</option>
-                        <option value="Jijik">Jijik</option>
-                        <option value="Mencemooh">Mencemooh</option>
-                        <option value="Netral">Netral</option>
-                        <option value="Berpikir">Berpikir</option>
-                        <option value="Bingung">Bingung</option>
-                        <option value="Penasaran">Penasaran</option>
-                        <option value="Serius">Serius</option>
-                    </select>
-                    <input type="text" id="facial-expression-detail" placeholder="Detail atau ekspresi custom..." class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 mt-2">
-                </div>
-                <div>
-                    <label for="emotion-select" class="block text-sm font-medium text-gray-700 mb-1">Emosi</label>
-                    <select id="emotion-select" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                        <option value="">-- Pilih --</option>
-                        <option value="Gembira">Gembira</option>
-                        <option value="Sedih">Sedih</option>
-                        <option value="Marah">Marah</option>
-                        <option value="Takut">Takut</option>
-                        <option value="Terkejut">Terkejut</option>
-                        <option value="Jijik">Jijik</option>
-                        <option value="Senang">Senang</option>
-                        <option value="Tertawa">Tertawa</option>
-                        <option value="Cinta">Cinta</option>
-                        <option value="Bangga">Bangga</option>
-                        <option value="Puas">Puas</option>
-                        <option value="Kagum">Kagum</option>
-                        <option value="Penasaran">Penasaran</option>
-                        <option value="Bingung">Bingung</option>
-                        <option value="Khawatir">Khawatir</option>
-                        <option value="Cemas">Cemas</option>
-                        <option value="Kecewa">Kecewa</option>
-                        <option value="Frustrasi">Frustrasi</option>
-                        <option value="Jengkel">Jengkel</option>
-                        <option value="Malu">Malu</option>
-                        <option value="Bersalah">Bersalah</option>
-                        <option value="Iri / Cemburu">Iri / Cemburu</option>
-                        <option value="Harapan">Harapan</option>
-                        <option value="Bosan">Bosan</option>
-                        <option value="Serius">Serius</option>
-                        <option value="Netral">Netral</option>
-                    </select>
-                    <input type="text" id="emotion-detail" placeholder="Detail atau emosi custom..." class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 mt-2">
-                </div>
-            </div>
-
-            <div class="mb-4">
-                <label for="emotion-intensity-select" class="block text-sm font-medium text-gray-700 mb-1">Intensitas Emosi</label>
-                <select id="emotion-intensity-select" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                    <option value="">-- Pilih --</option>
-                    <option value="Rendah">Rendah (Subtle)</option>
-                    <option value="Sedang">Sedang (Moderate)</option>
-                    <option value="Tinggi">Tinggi (Intense)</option>
-                    <option value="Sangat Tinggi">Sangat Tinggi (Extreme)</option>
-                </select>
-                <input type="text" id="emotion-intensity-detail" placeholder="Detail atau intensitas custom..." class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 mt-2">
-            </div>
-
-            <div class="mb-4">
-                <label for="action" class="block text-sm font-bold text-gray-700 mb-1">Aksi / Pose</label>
-                <input type="text" id="action" placeholder="Contoh: Berdiri tegap memegang katana" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-            </div>
-
-            <div class="mb-4">
-                <label for="setting" class="block text-sm font-bold text-gray-700 mb-1">Latar (Lokasi & Lingkungan)</label>
-                <input type="text" id="setting" placeholder="Contoh: Hutan bambu yang disinari cahaya bulan" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-            </div>
-
-            <div class="mb-4">
-                <label for="style-select" class="block text-sm font-bold text-gray-700 mb-1">Gaya Visual</label>
-                <select id="style-select" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                    <option value="">-- Tidak ada --</option>
-                    <option value="Portrait Photography">Portrait Photography (Fotografi Potret)</option>
-                    <option value="Landscape Photography">Landscape Photography (Fotografi Lanskap)</option>
-                    <option value="Street Photography">Street Photography (Fotografi Jalanan)</option>
-                    <option value="Fashion Photography">Fashion Photography (Fotografi Fesyen)</option>
-                    <option value="Documentary Photography">Documentary Photography (Fotografi Dokumenter)</option>
-                    <option value="Architectural Photography">Architectural Photography (Fotografi Arsitektur)</option>
-                    <option value="Wildlife Photography">Wildlife Photography (Fotografi Satwa Liar)</option>
-                    <option value="Cinematic Photography">Cinematic Photography (Fotografi Sinematik)</option>
-                </select>
-            </div>
-            <div class="mb-4">
-                <label for="japanese-style-select" class="block text-sm font-bold text-gray-700 mb-1">Referensi Gaya Jepang</label>
-                <select id="japanese-style-select" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                    <option value="">-- Tidak ada --</option>
-                    <option value="Hayao Miyazaki (Studio Ghibli)">Hayao Miyazaki (Studio Ghibli) - Animasi Fantasi & Penuh Pesona</option>
-                    <option value="Akira Kurosawa">Akira Kurosawa - Komposisi Sinematik Epik (Gaya Samurai)</option>
-                    <option value="Takashi Murakami">Takashi Murakami - Superflat (Pop Art & Anime)</option>
-                    <option value="Yayoi Kusama">Yayoi Kusama - Seni Pop & Pola Berulang (Polka Dots)</option>
-                    <option value="Daido Moriyama">Daido Moriyama - Street Photography (Kontras Tinggi, Grainy, B&W)</option>
-                    <option value="Nobuyoshi Araki">Nobuyoshi Araki - Fotografi Erotis & Personal (Gaya Buku Harian)</option>
-                    <option value="Rinko Kawauchi">Rinko Kawauchi - Puitis & Tenang (Palet Warna Lembut)</option>
-                    <option value="Hiroshi Sugimoto">Hiroshi Sugimoto - Konseptual & Minimalis (Long Exposure)</option>
-                </select>
-            </div>
-            
-            <div class="mb-4">
-                <label for="color-film-type-select" class="block text-sm font-bold text-gray-700 mb-1">Color Film Type</label>
-                <select id="color-film-type-select" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                    <option value="">-- Tidak ada --</option>
-                    <option value="CINESTILL 800T">Cinestill 800T</option>
-                    <option value="KODAK PORTRA 800">Kodak Portra 800</option>
-                    <option value="LOMOGRAPHY X-PRO 200">Lomography X-Pro 200</option>
-                    <option value="KODAK EKTACHROME">Kodak Ektachrome</option>
-                    <option value="FUJIFILM PRO 400H">Fujifilm Pro 400H</option>
-                    <option value="LOMOGRAPHY COLOR NEGATIVE 800">Lomography Color Negative 800</option>
-                    <option value="KODAK EKTAR 100">Kodak Ektar 100</option>
-                    <option value="REVOLG KOLOR">Revolg Kolor</option>
-                    <option value="AGFA VISTA PLUS 200">Agfa Vista Plus 200</option>
-                    <option value="FUJIFILM VELVIA 50">Fujifilm Velvia 50</option>
-                    <option value="FUJIFILM SUPERIA X-TRA">Fujifilm Superia X-Tra</option>
-                    <option value="KODAK GOLD 200">Kodak Gold 200</option>
-                    <option value="FUJIFILM PROVIA 100F">Fujifilm Provia 100F</option>
-                    <option value="ADOX COLOR IMPLOSION">Adox Color Implosion</option>
-                    <option value="AGFA VISTA 400">Agfa Vista 400</option>
-                    <option value="LOMOGRAPHY REDSCALE">Lomography Redscale</option>
-                    <option value="KODAK VISION3 500T">Kodak Vision3 500T</option>
-                    <option value="LOMOGRAPHY DIANA F+">Lomography Diana F+</option>
-                    <option value="POLAROID ORIGINALS (NOT 35MM)">Polaroid Originals (Not 35mm)</option>
-                    <option value="FUJIFILM INSTAX MINI (NOT 35MM)">Fujifilm Instax Mini (Not 35mm)</option>
-                </select>
-            </div>
-            <div class="mb-4">
-                <label for="light-conditions-select" class="block text-sm font-bold text-gray-700 mb-1">Light Conditions</label>
-                <select id="light-conditions-select" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                    <option value="">-- Tidak ada --</option>
-                    <option value="Golden Hour">Golden Hour (Cahaya hangat saat matahari terbit/terbenam)</option>
-                    <option value="Blue Hour">Blue Hour (Cahaya biru lembut sebelum matahari terbit/setelah terbenam)</option>
-                    <option value="Overcast Light">Overcast Light (Cahaya merata dari langit berawan, minim bayangan)</option>
-                    <option value="Diffused Light">Diffused Light (Cahaya yang disebarkan, bayangan lembut)</option>
-                    <option value="Backlighting">Backlighting (Cahaya dari belakang subjek, menciptakan siluet atau rim light)</option>
-                    <option value="Soft Ambient Light">Soft Ambient Light (Cahaya alami yang lembut dan merata di sekitar)</option>
-                    <option value="Low-Key Lighting">Low-Key Lighting (Dominasi area gelap, kontras tinggi, dramatis)</option>
-                    <option value="High-Key Lighting">High-Key Lighting (Dominasi area terang, kontras rendah, cerah)</option>
-                    <option value="Window Light">Window Light (Cahaya alami dari jendela, lembut dan terarah)</option>
-                    <option value="Dappled Light">Dappled Light (Cahaya yang menembus dedaunan/objek, menciptakan pola)</option>
-                    <option value="Spotlight">Spotlight (Cahaya terfokus pada area kecil, intens)</option>
-                    <option value="Twilight Light">Twilight Light (Cahaya redup saat senja atau fajar)</option>
-                    <option value="Candlelight">Candlelight (Cahaya hangat dan berkedip dari lilin)</option>
-                    <option value="Neon Light">Neon Light (Cahaya berwarna cerah dari lampu neon)</option>
-                    <option value="Moonlight">Moonlight (Cahaya lembut dan dingin dari bulan)</option>
-                    <option value="Street Light">Street Light (Cahaya buatan dari lampu jalan, sering oranye/kuning)</option>
-                    <option value="Bounced Light">Bounced Light (Cahaya yang dipantulkan dari permukaan lain)</option>
-                    <option value="Lens Flare">Lens Flare (Cahaya yang masuk ke lensa, menciptakan lingkaran/garis)</option>
-                    <option value="Studio Light">Studio Light (Pencahayaan terkontrol di studio, profesional)</option>
-                    <option value="Pattern Light">Pattern Light (Cahaya yang membentuk pola tertentu)</option>
-                    <option value="Hard Light">Hard Light (Cahaya langsung, bayangan tajam, kontras tinggi)</option>
-                    <option value="Soft Light">Soft Light (Cahaya lembut, bayangan halus, kontras rendah)</option>
-                    <option value="Three-Point Lighting">Three-Point Lighting (Teknik standar dengan key, fill, dan backlight)</option>
-                </select>
-            </div>
-            <div class="mb-4">
-                <label for="color-tone-select" class="block text-sm font-bold text-gray-700 mb-1">Color Tone</label>
-                <select id="color-tone-select" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                    <option value="">-- Tidak ada --</option>
-                    <option value="Fuji Color Tone">Fuji Color Tone - Hijau & Biru Cerah, Nada Kulit Menyenangkan</option>
-                    <option value="Kodak Portra Color Tone">Kodak Portra Color Tone - Hangat, Alami, Warna Lembut</option>
-                    <option value="Cinematic Color Grading">Cinematic Color Grading - Sering Teal & Oranye, Desaturasi</option>
-                    <option value="Vintage/Retro Color Tone">Vintage/Retro Color Tone - Sepia, Pudar, Hangat, Desaturasi</option>
-                    <option value="Monochromatic/Black & White">Monochromatic/Black & White - Hitam Putih</option>
-                    <option value="Vibrant/Pop Color Tone">Vibrant/Pop Color Tone - Jenuh, Cerah, Mencolok</option>
-                    <option value="Muted/Earthy Color Tone">Muted/Earthy Color Tone - Desaturasi, Alami, Redup</option>
-                    <option value="Cool/Blue Tones">Cool/Blue Tones - Menekankan Biru & Hijau Dingin</option>
-                    <option value="Warm/Golden Tones">Warm/Golden Tones - Menekankan Kuning, Oranye, & Merah</option>
-                </select>
-            </div>
-            <div class="mb-4">
-                <label for="angle-select" class="block text-sm font-bold text-gray-700 mb-1">Angle Foto</label>
-                <select id="angle-select" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                    <option value="">-- Tidak ada --</option>
-                    <option value="Low Angle">Low Angle (Sudut Rendah)</option>
-                    <option value="High Angle">High Angle (Sudut Tinggi)</option>
-                    <option value="Eye-level Shot">Eye-level Shot (Setinggi Mata)</option>
-                    <option value="Dutch Angle">Dutch Angle (Miring)</option>
-                    <option value="Worm's Eye View">Worm's Eye View (Sudut Pandang Cacing)</option>
-                    <option value="Bird's Eye View">Bird's Eye View (Sudut Pandang Burung)</option>
-                    <option value="Over-the-shoulder Shot">Over-the-shoulder Shot (Dari Balik Bahu)</option>
-                    <option value="POV Shot">POV Shot (Sudut Pandang Orang Pertama)</option>
-                </select>
-            </div>
-            <div class="mb-4">
-                <label for="camera-type-select" class="block text-sm font-bold text-gray-700 mb-1">Jenis Kamera</label>
-                <select id="camera-type-select" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                    <option value="">-- Tidak ada --</option>
-                    <option value="Smartphone Camera">Smartphone Camera</option>
-                    <option value="iPhone Camera">iPhone Camera</option>
-                    <option value="DSLR Camera">DSLR Camera</option>
-                    <option value="Mirrorless Camera">Mirrorless Camera</option>
-                    <option value="Medium Format Camera">Medium Format Camera</option>
-                    <option value="Large Format Camera">Large Format Camera</option>
-                    <option value="Drone Camera">Drone Camera</option>
-                    <option value="GoPro Camera">GoPro Camera</option>
-                    <option value="Vintage Camera">Vintage Camera</option>
-                    <option value="Disposable Camera">Disposable Camera</option>
-                </select>
-            </div>
-            <div class="mb-4">
-                <label for="lens-select" class="block text-sm font-bold text-gray-700 mb-1">Lensa Kamera</label>
-                <select id="lens-select" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                    <option value="">-- Tidak ada --</option>
-                    <option value="Wide-angle Lens">Wide-angle Lens (Lensa Sudut Lebar)</option>
-                    <option value="Standard Lens">Standard Lens (Lensa Standar/Normal)</option>
-                    <option value="Telephoto Lens">Telephoto Lens (Lensa Telefoto)</option>
-                    <option value="Macro Lens">Macro Lens (Lensa Makro)</option>
-                    <option value="Fisheye Lens">Fisheye Lens (Lensa Mata Ikan)</option>
-                    <option value="Prime Lens">Prime Lens (Lensa Prime/Fokus Tetap)</option>
-                    <option value="Zoom Lens">Zoom Lens (Lensa Zoom)</option>
-                    <option value="Tilt-Shift Lens">Tilt-Shift Lens (Lensa Tilt-Shift)</option>
-                </select>
-            </div>
-            <div class="mb-4">
-                <label for="depth-of-field-select" class="block text-sm font-bold text-gray-700 mb-1">Kedalaman Bidang & Fokus</label>
-                <select id="depth-of-field-select" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                    <option value="">-- Tidak ada --</option>
-                    <option value="Shallow Depth of Field">Shallow Depth of Field (Dangkal)</option>
-                    <option value="Deep Focus">Deep Focus (Dalam)</option>
-                    <option value="Soft Focus">Soft Focus (Fokus Lembut)</option>
-                    <option value="Bokeh">Bokeh</option>
-                    <option value="Sharp Focus">Sharp Focus (Fokus Tajam)</option>
-                </select>
-                <input type="text" id="depth-of-field-detail" placeholder="Contoh: Bokeh berbentuk hati, fokus pada mata" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 mt-2">
-            </div>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+              <i class="fa fa-video-camera"></i>
+              Video Prompt Generator
+            </a>
         </div>
-
-        <div class="border-t-2 border-slate-100 my-8"></div>
-
-        <div>
-            <button id="generate-btn" class="w-full flex items-center justify-center gap-2 px-4 py-3 font-semibold bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 ease-in-out transform hover:scale-105">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                </svg>
-                <span>Hasilkan Prompt</span>
-            </button>
-        </div>
-
-        <div class="mt-6">
-            <label for="result-prompt" class="block text-base font-semibold text-slate-800 mb-2">JSON yang Dihasilkan</label>
-            <div class="relative group">
-                <textarea id="result-prompt" readonly class="block w-full px-4 py-3 font-mono text-sm text-slate-50 bg-slate-800 border border-slate-700 rounded-lg shadow-inner h-96 resize-y focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Hasil JSON akan muncul di sini..."></textarea>
-                <button id="copy-btn" class="absolute top-3 right-10 flex items-center justify-center gap-1 px-3 py-1.5 text-xs font-semibold bg-slate-600 text-white rounded-md hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 transition-opacity duration-200 opacity-25 group-hover:opacity-100">
-                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                    </svg>
-                    <span>Salin</span>
-                </button>
-                <div id="copy-feedback" class="absolute top-3 right-3 bg-green-600 text-white text-xs font-bold px-2.5 py-1.5 rounded-md opacity-0 transition-opacity duration-300 pointer-events-none">
-                    Berhasil disalin!
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Character Management Modal -->
-    <div id="character-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 hidden">
-        <div class="bg-white rounded-lg shadow-xl p-8 w-11/12 max-w-2xl relative overflow-y-auto max-h-[90vh]">
-            <span class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-3xl cursor-pointer close-btn">&times;</span>
-            <h2 class="text-2xl font-bold text-gray-800 mb-6">Kelola Karakter</h2>
-            <form id="character-form" class="space-y-4">
-                <input type="hidden" id="character-id">
-                <div>
-                    <label for="char-name" class="block text-sm font-medium text-gray-700 mb-1">Nama Karakter</label>
-                    <input type="text" id="char-name" required placeholder="Contoh: 'Detektif K'" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                </div>
-
-                <h3 class="text-xl font-semibold text-blue-600 border-b pb-2 mb-4">Detail Fisik</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label for="char-gender" class="block text-sm font-medium text-gray-700 mb-1">Gender</label>
-                        <input type="text" id="char-gender" placeholder="Pria/Wanita" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                    </div>
-                    <div>
-                        <label for="char-age" class="block text-sm font-medium text-gray-700 mb-1">Usia</label>
-                        <input type="text" id="char-age" placeholder="Dewasa Muda, Sekitar 30 tahun" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                    </div>
-                </div>
-                <div class="mb-4">
-                    <label for="char-ethnicity" class="block text-sm font-medium text-gray-700 mb-1">Etnisitas</label>
-                    <input type="text" id="char-ethnicity" placeholder="Asia Tenggara, Kaukasia, Jepang" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                </div>
-
-                <h4 class="text-lg font-semibold text-blue-600 border-b pb-1 mb-4">Wajah</h4>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label for="char-face-shape" class="block text-sm font-medium text-gray-700 mb-1">Bentuk Wajah</label>
-                        <select id="char-face-shape" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                            <option value="">-- Pilih --</option>
-                            <option value="Oval">Oval</option>
-                            <option value="Bulat">Bulat</option>
-                            <option value="Persegi">Persegi</option>
-                            <option value="Hati">Hati</option>
-                            <option value="Panjang">Panjang</option>
-                            <option value="Berlian">Berlian</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="char-skin-tone" class="block text-sm font-medium text-gray-700 mb-1">Warna Kulit</label>
-                        <select id="char-skin-tone" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                            <option value="">-- Pilih --</option>
-                            <option value="Pucat">Pucat</option>
-                            <option value="Cerah">Cerah</option>
-                            <option value="Sawo Matang">Sawo Matang</option>
-                            <option value="Gelap">Gelap</option>
-                            <option value="Zaitun">Zaitun</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label for="char-eye-color" class="block text-sm font-medium text-gray-700 mb-1">Warna Mata</label>
-                        <select id="char-eye-color" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                            <option value="">-- Pilih --</option>
-                            <option value="Coklat">Coklat</option>
-                            <option value="Biru">Biru</option>
-                            <option value="Hijau">Hijau</option>
-                            <option value="Abu-abu">Abu-abu</option>
-                            <option value="Hazel">Hazel</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="char-nose-shape" class="block text-sm font-medium text-gray-700 mb-1">Bentuk Hidung</label>
-                        <select id="char-nose-shape" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                            <option value="">-- Pilih --</option>
-                            <option value="Mancung">Mancung</option>
-                            <option value="Pesek">Pesek</option>
-                            <option value="Kecil">Kecil</option>
-                            <option value="Besar">Besar</option>
-                            <option value="Standar">Standar</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="mb-4">
-                    <label for="char-lip-shape" class="block text-sm font-medium text-gray-700 mb-1">Bentuk Bibir</label>
-                    <select id="char-lip-shape" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                        <option value="">-- Pilih --</option>
-                        <option value="Penuh">Penuh</option>
-                        <option value="Tipis">Tipis</option>
-                        <option value="Standar">Standar</option>
-                        <option value="Hati">Hati</option>
-                        <option value="Busur Cupid">Busur Cupid</option>
-                    </select>
-                </div>
-
-                <h4 class="text-lg font-semibold text-blue-600 border-b pb-1 mb-4">Rambut</h4>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label for="char-hair-color" class="block text-sm font-medium text-gray-700 mb-1">Warna Rambut</label>
-                        <select id="char-hair-color" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                            <option value="">-- Pilih --</option>
-                            <option value="Hitam">Hitam</option>
-                            <option value="Pirang">Pirang</option>
-                            <option value="Coklat">Coklat</option>
-                            <option value="Merah">Merah</option>
-                            <option value="Abu-abu">Abu-abu</option>
-                            <option value="Putih">Putih</option>
-                            <option value="Biru">Biru</option>
-                            <option value="Hijau">Hijau</option>
-                            <option value="Ungu">Ungu</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Gaya Rambut</label>
-                        <select id="char-hair-style-pria" class="hidden block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                            <option value="">-- Pilih Gaya Rambut Pria --</option>
-                            <optgroup label="Gaya Rambut Panjang">
-                                <option value="Man Bun Undercut">Man Bun Undercut</option>
-                                <option value="Curtain">Curtain</option>
-                                <option value="Comma Hair">Comma Hair</option>
-                                <option value="Side-Parted">Side-Parted</option>
-                                <option value="Two Block">Two Block</option>
-                                <option value="Messy Waves">Messy Waves</option>
-                                <option value="Slick Back">Slick Back</option>
-                                <option value="Pompadour">Pompadour</option>
-                                <option value="Quiff">Quiff</option>
-                                <option value="Undercut">Undercut</option>
-                            </optgroup>
-                            <optgroup label="Gaya Rambut Pendek">
-                                <option value="French Crop">French Crop</option>
-                                <option value="Buzz Cut">Buzz Cut</option>
-                                <option value="Caesar Cut">Caesar Cut</option>
-                                <option value="Taper Cut">Taper Cut</option>
-                                <option value="Textured Spikes">Textured Spikes</option>
-                                <option value="High and Tight">High and Tight</option>
-                                <option value="Fade Cut">Fade Cut</option>
-                            </optgroup>
-                        </select>
-                        <select id="char-hair-style-wanita" class="hidden block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                            <option value="">-- Pilih Gaya Rambut Wanita --</option>
-                            <optgroup label="Gaya Rambut Pendek">
-                                <option value="Pixie Cut">Pixie Cut</option>
-                                <option value="Bixie Cut (Bob-Pixie)">Bixie Cut (Bob-Pixie)</option>
-                                <option value="French Bob">French Bob</option>
-                                <option value="Short Shag / Wolf Cut">Short Shag / Wolf Cut</option>
-                                <option value="Undercut">Undercut</option>
-                            </optgroup>
-                            <optgroup label="Gaya Rambut Menengah (Sebahu)">
-                                <option value="Lob (Long Bob)">Lob (Long Bob)</option>
-                                <option value="Clavicut (Sepanjang Tulang Selangka)">Clavicut (Sepanjang Tulang Selangka)</option>
-                                <option value="Butterfly Cut">Butterfly Cut</option>
-                                <option value="Wavy Shag">Wavy Shag</option>
-                                <option value="Blunt Cut (Potongan Rata)">Blunt Cut (Potongan Rata)</option>
-                            </optgroup>
-                            <optgroup label="Gaya Rambut Panjang">
-                                <option value="Long Layers (Layer Panjang)">Long Layers (Layer Panjang)</option>
-                                <option value="Curtain Bangs with Long Hair">Curtain Bangs with Long Hair</option>
-                                <option value="Glass Hair (Lurus & Berkilau)">Glass Hair (Lurus & Berkilau)</option>
-                                <option value="Long Shag">Long Shag</option>
-                                <option value="Mermaid Waves">Mermaid Waves</option>
-                            </optgroup>
-                            <optgroup label="Gaya Rambut Diikat / Ditata">
-                                <option value="High Ponytail (Kuncir Kuda Tinggi)">High Ponytail (Kuncir Kuda Tinggi)</option>
-                                <option value="Sleek Bun (Cepol Rapi)">Sleek Bun (Cepol Rapi)</option>
-                                <option value="Messy Bun (Cepol Berantakan)">Messy Bun (Cepol Berantakan)</option>
-                                <option value="Box Braids">Box Braids</option>
-                                <option value="Half-up Half-down">Half-up Half-down</option>
-                            </optgroup>
-                        </select>
-                    </div>
-                </div>
-                <div class="mb-4">
-                    <label for="char-hair-length" class="block text-sm font-medium text-gray-700 mb-1">Panjang Rambut</label>
-                    <select id="char-hair-length" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                        <option value="">-- Pilih --</option>
-                        <option value="Botak">Botak</option>
-                        <option value="Sangat Pendek">Sangat Pendek</option>
-                        <option value="Pendek">Pendek</option>
-                        <option value="Sebahu">Sebahu</option>
-                        <option value="Panjang">Panjang</option>
-                        <option value="Sangat Panjang">Sangat Panjang</option>
-                    </select>
-                </div>
-
-                <h4 class="text-lg font-semibold text-blue-600 border-b pb-1 mb-4">Tubuh</h4>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label for="char-body-build" class="block text-sm font-medium text-gray-700 mb-1">Bentuk Tubuh</label>
-                        <select id="char-body-build" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                            <option value="">-- Pilih --</option>
-                            <option value="Rata-rata">Rata-rata</option>
-                            <option value="Langsing">Langsing</option>
-                            <option value="Ramping">Ramping</option>
-                            <option value="Atletis">Atletis</option>
-                            <option value="Berotot">Berotot</option>
-                            <option value="Berisi">Berisi</option>
-                            <option value="Bentuk tubuh sintal">Bentuk tubuh sintal</option>
-                            <option value="Proporsional">Proporsional</option>
-                            <option value="Ideal">Ideal</option>
-                            <option value="Berlekuk">Berlekuk</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="char-body-height" class="block text-sm font-medium text-gray-700 mb-1">Tinggi Badan</label>
-                        <input type="text" id="char-body-height" placeholder="170cm, Tinggi, Pendek" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                    </div>
-                </div>
-
-                
-
-                <div class="mb-4">
-                    <label for="char-head-accessory" class="block text-sm font-medium text-gray-700 mb-1">Aksesoris Kepala</label>
-                    <input type="text" id="char-head-accessory" placeholder="Contoh: Topi, Hijab, Peci, Bando" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                </div>
-
-                <h4 class="text-lg font-semibold text-blue-600 border-b pb-1 mb-4">Ciri Khas</h4>
-                <div class="mb-4">
-                    <label for="char-feature-1" class="block text-sm font-medium text-gray-700 mb-1">Ciri Khas 1</label>
-                    <input type="text" id="char-feature-1" placeholder="Bekas luka di pipi, Tato naga di lengan" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                </div>
-                <div class="mb-4">
-                    <label for="char-feature-2" class="block text-sm font-medium text-gray-700 mb-1">Ciri Khas 2</label>
-                    <input type="text" id="char-feature-2" placeholder="Kacamata bulat, Anting besar" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                </div>
-
-                <div class="flex justify-end mt-6">
-                    <div class="flex justify-end mt-6">
-                    <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">Simpan Karakter</button>
-                </div>
-                </div>
-            </form>
-            <hr class="my-6 border-gray-300">
-            <h3 class="text-xl font-semibold text-gray-800 mb-4">Karakter Tersimpan</h3>
-            <ul id="character-list" class="space-y-2">
-        </div>
-    </div>
+    </nav>
 
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- DOM ELEMENTS ---
-            const generateBtn = document.getElementById('generate-btn');
-            const copyBtn = document.getElementById('copy-btn');
-            const resultPrompt = document.getElementById('result-prompt');
-            const copyFeedback = document.getElementById('copy-feedback');
-            const japaneseStyleSelect = document.getElementById('japanese-style-select');
-            const colorFilmTypeSelect = document.getElementById('color-film-type-select');
-            const lightConditionsSelect = document.getElementById('light-conditions-select');
-            const colorToneSelect = document.getElementById('color-tone-select');
-            const lensSelect = document.getElementById('lens-select');
-            const depthOfFieldSelect = document.getElementById('depth-of-field-select');
-            const depthOfFieldDetailInput = document.getElementById('depth-of-field-detail');
-            const styleSelect = document.getElementById('style-select');
+     <section class="hero hero-bg d-flex justify-content-center align-items-center">
+               <div class="container">
+                    <div class="row">
 
-            // --- CHARACTER MODAL ELEMENTS ---
-            const characterModal = document.getElementById('character-modal');
-            const manageCharactersBtn = document.getElementById('manage-characters-btn');
-            const closeModalBtn = characterModal.querySelector('.close-btn');
-            const characterForm = document.getElementById('character-form');
-            const characterIdInput = document.getElementById('character-id');
-            const characterNameInput = document.getElementById('char-name');
+                        <div class="col-lg-10 col-md-12 col-12 mx-auto">
+                              <div class="hero-text text-center">
 
-            // Individual character detail inputs
-            const charGenderInput = document.getElementById('char-gender');
-            const charAgeInput = document.getElementById('char-age');
-            const charEthnicityInput = document.getElementById('char-ethnicity');
-            const charFaceShapeInput = document.getElementById('char-face-shape');
-            const charSkinToneInput = document.getElementById('char-skin-tone');
-            const charEyeColorInput = document.getElementById('char-eye-color');
-            const charNoseShapeInput = document.getElementById('char-nose-shape');
-            const charLipShapeInput = document.getElementById('char-lip-shape');
-            const charHairColorInput = document.getElementById('char-hair-color');
-            const charHairStylePriaInput = document.getElementById('char-hair-style-pria');
-            const charHairStyleWanitaInput = document.getElementById('char-hair-style-wanita');
-            const charHairLengthInput = document.getElementById('char-hair-length');
-            const charBodyBuildInput = document.getElementById('char-body-build');
-            const charBodyHeightInput = document.getElementById('char-body-height');
-            const clothingStyleSelect = document.getElementById('clothing-style-select');
-            const clothingTopSelect = document.getElementById('clothing-top-select');
-            const clothingTopDetailInput = document.getElementById('clothing-top-detail');
-            const clothingBottomSelect = document.getElementById('clothing-bottom-select');
-            const clothingBottomDetailInput = document.getElementById('clothing-bottom-detail');
-            const clothingFootwearSelect = document.getElementById('clothing-footwear-select');
-            const clothingFootwearDetailInput = document.getElementById('clothing-footwear-detail');
-            const charFeature1Input = document.getElementById('char-feature-1');
-            const charFeature2Input = document.getElementById('char-feature-2');
-            const charHeadAccessoryInput = document.getElementById('char-head-accessory');
-            const characterListUl = document.getElementById('character-list');
-            const characterSelect = document.getElementById('character-select');
+                                   <h1 class="text-white" data-aos="fade-up">Generate Your Video Prompt JSON</h1>
 
-            // --- DATA ---
-            let characters = JSON.parse(localStorage.getItem('image-gen-characters')) || [];
+                                   <div class="mt-4" data-aos="fade-up" data-aos-delay="100">
+                                       <form id="promptForm">
+                                           <!-- Shot Section -->
+                                           <div class="form-section text-left">
+                                               <h3>Shot Details</h3>
+                                               <div class="form-group">
+                                                   <label for="shotType">Shot Type (Jenis Bidikan):</label>
+                                                   <select id="shotType" class="form-control">
+                                                       <option value="">-- Select Shot Type --</option>
+                                                       <option value="Extreme Wide Shot (EWS)">Extreme Wide Shot (EWS) - Lokasi sangat luas, subjek kecil atau gak kelihatan</option>
+                                                       <option value="Wide Shot (WS) / Long Shot (LS)">Wide Shot (WS) / Long Shot (LS) - Seluruh tubuh subjek terlihat dalam satu frame</option>
+                                                       <option value="Full Shot (FS)">Full Shot (FS) - Sama kayak WS, tapi lebih fokus ke subjek</option>
+                                                       <option value="Medium Long Shot (MLS)">Medium Long Shot (MLS) - Dari lutut ke atas, transisi antara WS & MS</option>
+                                                       <option value="Medium Shot (MS)">Medium Shot (MS) - Dari pinggang ke atas, natural buat dialog</option>
+                                                       <option value="Medium Close-Up (MCU)" selected>Medium Close-Up (MCU) - Dada ke atas, lebih fokus ke ekspresi wajah</option>
+                                                       <option value="Close-Up (CU)">Close-Up (CU) - Fokus ke wajah atau objek kecil</option>
+                                                       <option value="Extreme Close-Up (ECU)">Extreme Close-Up (ECU) - Detail sangat dekat (mata, tangan, dll)</option>
+                                                       <option value="Over-the-Shoulder (OTS)">Over-the-Shoulder (OTS)</option>
+                                                       <option value="Two-Shot (MS/WS)">Two-Shot (MS/WS)</option>
+                                                       <option value="Tracking / Dolly">Tracking / Dolly</option>
+                                                       <option value="Crane / Drone Shot">Crane / Drone Shot</option>
+                                                       <option value="Portrait Shot">Portrait Shot</option>
+                                                   </select>
+                                               </div>
+                                               <div class="form-group">
+                                                   <label for="lens">Lens (Lensa):</label>
+                                                   <select id="lens" class="form-control">
+                                                       <option value="">-- Select Lens Type --</option>
+                                                       <option value="Wide-Angle Lens (10mm – 35mm)">Wide-Angle Lens (10mm – 35mm) - Ruang kelihatan luas, sedikit distorsi. Buat landscape, establishing, vlog, atau action.</option>
+                                                       <option value="Standard Lens (35mm – 70mm)" selected>Standard Lens (35mm – 70mm) - Perspektif natural seperti mata manusia. Cocok buat dialog, dokumenter, dan iklan.</option>
+                                                       <option value="Telephoto Lens (70mm – 200mm+)">Telephoto Lens (70mm – 200mm+) - Kompresi gambar, background jadi blur. Cocok buat close-up, wildlife, candid, atau scene emosional.</option>
+                                                       <option value="Super Telephoto Lens (300mm ke atas)">Super Telephoto Lens (300mm ke atas) - Extreme close-up jarak jauh. Biasanya buat sport, konser, wildlife.</option>
+                                                       <option value="Ultra-Wide Lens (< 16mm)">Ultra-Wide Lens (< 16mm) - Distorsi ekstrem, dipakai buat efek visual kreatif atau ruang sempit.</option>
+                                                       <option value="Macro Lens (50mm – 100mm khusus)">Macro Lens (50mm – 100mm khusus) - Fokus ke objek kecil banget. Cocok buat detail produk, makanan, serangga, dll.</option>
+                                                   </select>
+                                                   <span id="lensSuggestion" class="suggestion-text"></span>
+                                               </div>
+                                               <div class="form-group">
+                                                   <label for="aperture">Aperture:</label>
+                                                   <select id="aperture" class="form-control">
+                                                       <option value="f/1.2 – f/1.8">f/1.2 – f/1.8 - Bukaan super besar. Latar blur parah. Bokeh sinematik</option>
+                                                       <option value="f/2 – f/2.8" selected>f/2 – f/2.8 - Masih creamy, bagus buat isolasi subjek</option>
+                                                       <option value="f/3.5 – f/5.6">f/3.5 – f/5.6 - Depth of field mulai lebar</option>
+                                                       <option value="f/6.3 – f/11">f/6.3 – f/11 - Hampir semua dalam fokus, cahaya dikontrol</option>
+                                                       <option value="f/16 – f/22">f/16 – f/22 - Super kecil, biasanya buat shot sangat terang</option>
+                                                   </select>
+                                                   <span id="apertureSuggestion" class="suggestion-text"></span>
+                                               </div>
+                                               <div class="form-group">
+                                                   <label for="camera">Camera (Kamera):</label>
+                                                   <select id="camera" class="form-control">
+                                                       <option value="">-- Select Camera --</option>
+                                                       <option value="Blackmagic URSA Mini Pro 12K">Blackmagic URSA Mini Pro 12K - Super35</option>
+                                                       <option value="Canon C70 / C300 Mark III">Canon C70 / C300 Mark III - Super35</option>
+                                                       <option value="Sony FX6 / FX9">Sony FX6 / FX9 - Full Frame</option>
+                                                       <option value="RED Komodo / V-Raptor">RED Komodo / V-Raptor - Super35 / Full Frame</option>
+                                                       <option value="ARRI Alexa Mini / LF">ARRI Alexa Mini / LF - Super35 / LF</option>
+                                                       <option value="Sony Venice" selected>Sony Venice</option>
+                                                   </select>
+                                               </div>
+                                               <div class="form-group">
+                                                   <label for="visualEffect">Visual Effect (Efek Visual):</label>
+                                                   <select id="visualEffect" class="form-control">
+                                                       <option value="">-- Select Visual Effect --</option>
+                                                       <option value="Portrait DoF">Portrait DoF - Fokus tajam ke wajah, latar blur banget. Buat dialog, emosi.</option>
+                                                       <option value="Foreground Blur">Foreground Blur - Objek depan blur, fokus di subjek di tengah/frame. Bikin depth kuat.</option>
+                                                       <option value="Background Blur (Bokeh)">Background Blur (Bokeh) - Subjek fokus, latar belakang creamy bokeh. Isolasi objek utama.</option>
+                                                       <option value="Focus Pull / Rack Focus">Focus Pull / Rack Focus - Ganti titik fokus antar dua subjek di layer berbeda. Dramatis.</option>
+                                                       <option value="Macro Shallow DoF">Macro Shallow DoF - Fokus super sempit (cm-an), buat detail produk, makanan, serangga.</option>
+                                                       <option value="Telephoto Compression DoF">Telephoto Compression DoF - Pakai lensa panjang (85mm–300mm), background mepet & blur total.</option>
+                                                   </select>
+                                               </div>
+                                               <div class="form-group">
+                                                   <label for="shotCameraMotion">Camera Motion (Gerakan Kamera):</label>
+                                                   <select id="shotCameraMotion" class="form-control">
+                                                       <option value="">-- Select Camera Motion --</option>
+                                                       <option value="Push-in (dolly-in)">Push-in (dolly-in)</option>
+                                                       <option value="Static / Slight Pan">Static / Slight Pan</option>
+                                                       <option value="Crane up / tilt up">Crane up / tilt up</option>
+                                                       <option value="Slow Pan / Drone Forward">Slow Pan / Drone Forward</option>
+                                                       <option value="Focus Pull">Focus Pull</option>
+                                                       <option value="Steadicam tracking">Steadicam tracking</option>
+                                                       <option value="Handheld slight shake" selected>Handheld slight shake</option>
+                                                       <option value="Whip Pan / Snap Zoom">Whip Pan / Snap Zoom</option>
+                                                       <option value="Static or Focus Shift">Static or Focus Shift</option>
+                                                       <option value="Gimbal / Dolly Arc">Gimbal / Dolly Arc</option>
+                                                       <option value="Pull-Out / Crane Up">Pull-Out / Crane Up</option>
+                                                       <option value="Push-in / Tilt Up">Push-in / Tilt Up</option>
+                                                   </select>
+                                                   <span id="cameraMotionSuggestion" class="suggestion-text"></span>
+                                               </div>
+                                               <div class="form-group">
+                                                   <label for="shotFrameRate">Frame Rate (Kecepatan Bingkai):</label>
+                                                   <input type="text" id="shotFrameRate" class="form-control" value="24fps">
+                                               </div>
+                                               <div class="form-group">
+                                                   <label for="shotFilmGrain">Film Grain (Butiran Film):</label>
+                                                   <input type="text" id="shotFilmGrain" class="form-control" value="fine-grain film emulation, subtle">
+                                               </div>
+                                           </div>
 
-            // --- HELPER FUNCTIONS ---
-            const toggleCustomInput = (selectElement, customInputElement) => {
-                if (selectElement.value !== '') {
-                    customInputElement.style.display = 'block';
-                } else {
-                    customInputElement.style.display = 'none';
-                    customInputElement.value = '';
-                }
-            };
+                                           <!-- Subject Section -->
+                                           <div class="form-section text-left">
+                                               <h3>Subject Details</h3>
+                                               <div class="form-group">
+                                                   <label for="subjectDescription">Description (Deskripsi):</label>
+                                                   <textarea id="subjectDescription" class="form-control" rows="4" placeholder="A 23-year-old Chinese female idol with straight black hair tied in a loose ponytail, delicate features, wearing a light blue and white striped sleeveless summer dress, sitting on the edge of her neatly made bed, visibly frustrated as she struggles to pull a tight yellow ankle sock onto her right foot."></textarea>
+                                               </div>
+                                               <div class="form-group">
+                                                   <label for="subjectWardrobe">Wardrobe (Pakaian):</label>
+                                                   <textarea id="subjectWardrobe" class="form-control" rows="2" placeholder="light blue and white striped sleeveless summer dress, yellow ankle socks, no shoes, minimalist jewelry"></textarea>
+                                               </div>
+                                           </div>
 
-            const updateHairStyleVisibility = () => {
-                const gender = charGenderInput.value.toLowerCase();
-                if (gender.startsWith('pria')) {
-                    charHairStylePriaInput.classList.remove('hidden');
-                    charHairStyleWanitaInput.classList.add('hidden');
-                    charHairStyleWanitaInput.value = '';
-                } else if (gender.startsWith('wanita')) {
-                    charHairStyleWanitaInput.classList.remove('hidden');
-                    charHairStylePriaInput.classList.add('hidden');
-                    charHairStylePriaInput.value = '';
-                } else {
-                    charHairStylePriaInput.classList.add('hidden');
-                    charHairStyleWanitaInput.classList.add('hidden');
-                    charHairStylePriaInput.value = '';
-                    charHairStyleWanitaInput.value = '';
-                }
-            };
+                                           <!-- Scene Section -->
+                                           <div class="form-section text-left">
+                                               <h3>Scene Details</h3>
+                                               <div class="form-group">
+                                                   <label for="sceneLocation">Location (Lokasi):</label>
+                                                   <textarea id="sceneLocation" class="form-control" rows="2" placeholder="her bedroom in a modern city apartment"></textarea>
+                                               </div>
+                                               <div class="form-group">
+                                                   <label for="sceneTimeOfDay">Time of Day (Waktu Hari):</label>
+                                                   <input type="text" id="sceneTimeOfDay" class="form-control" value="evening, artificial room light only">
+                                               </div>
+                                               <div class="form-group">
+                                                   <label for="sceneEnvironment">Environment (Lingkungan):</label>
+                                                   <textarea id="sceneEnvironment" class="form-control" rows="4" placeholder="lamplight casting moody shadows, potted plants by the window, pastel bedsheets, posters of pop stars, plush toy near the pillow, tidy desk, and some clothes loosely draped on a chair"></textarea>
+                                               </div>
+                                           </div>
 
-            // --- TEMPLATES ---
-            const getInitialCharacterTemplate = () => ({
-                gender: '',
-                age: '',
-                ethnicity: '',
-                face: { shape: '', skin_tone: '', eye_color: '', nose_shape: '', lip_shape: '' },
-                hair: { color: '', style: '', length: '' },
-                body: { build: '', height: '' },
-                clothing: { style: '', top: '', top_custom: '', bottom: '', bottom_custom: '', footwear: '', footwear_custom: '' },
-                distinguishing_features: { feature_1: '', feature_2: '' },
-                head_accessory: ''
-            });
+                                           <!-- Visual Details Section -->
+                                           <div class="form-section text-left">
+                                               <h3>Visual Details</h3>
+                                               <div class="form-group">
+                                                   <label for="visualAction">Action (Aksi):</label>
+                                                   <textarea id="visualAction" class="form-control" rows="4" placeholder="She sits at the bed’s edge, hunched over, brows tightly knit and lips pursed in clear frustration. She struggles with the yellow sock, pulling and adjusting, sighing and pausing, her motions quick and irritated. The other sock lies rumpled beside her."></textarea>
+                                               </div>
+                                               <div class="form-group">
+                                                   <label for="visualProps">Props (Properti):</label>
+                                                   <textarea id="visualProps" class="form-control" rows="2" placeholder="yellow socks (one in hand, one on bed), desk lamp, potted plant on windowsill, plush toy near pillow, smartphone dimly glowing on the bed"></textarea>
+                                               </div>
+                                           </div>
 
-            // --- CHARACTER MANAGEMENT ---
-            const openModal = () => characterModal.classList.remove('hidden');
-            const closeModal = () => {
-                characterModal.classList.add('hidden');
-                characterForm.reset();
-                characterIdInput.value = '';
-                updateHairStyleVisibility(); // Hide dropdowns when closing
-            };
+                                           <!-- Cinematography Section -->
+                                           <div class="form-section text-left">
+                                               <h3>Cinematography Details</h3>
+                                               <div class="form-group">
+                                                   <label for="cineTone">Tone (Nada):</label>
+                                                   <select id="cineTone" class="form-control">
+                                                       <option value="">-- Select Tone --</option>
+                                                       <option value="Realistic">Realistic</option>
+                                                       <option value="Intimate">Intimate</option>
+                                                       <option value="Frustrated">Frustrated</option>
+                                                       <option value="Moody">Moody</option>
+                                                       <option value="Melancholy">Melancholy</option>
+                                                       <option value="Romantic">Romantic</option>
+                                                       <option value="Cold / Isolated">Cold / Isolated</option>
+                                                       <option value="Dreamy / Fantastical">Dreamy / Fantastical</option>
+                                                       <option value="Energetic / Pop">Energetic / Pop</option>
+                                                       <option value="Heroic / Epic">Heroic / Epic</option>
+                                                       <option value="Mysterious / Noir">Mysterious / Noir</option>
+                                                       <option value="Surreal / Absurd">Surreal / Absurd</option>
+                                                       <option value="Tense / Horror">Tense / Horror</option>
+                                                       <option value="Clean / Minimalist">Clean / Minimalist</option>
+                                                       <option value="Nostalgic">Nostalgic</option>
+                                                   </select>
+                                               </div>
+                                               <div class="form-group">
+                                                   <label for="cineLighting">Lighting (Pencahayaan):</label>
+                                                   <select id="cineLighting" class="form-control">
+                                                       <option value="">-- Select Lighting Style --</option>
+                                                   </select>
+                                               </div>
+                                           </div>
 
-            const saveCharacters = () => {
-                localStorage.setItem('image-gen-characters', JSON.stringify(characters));
-            };
+                                           <!-- Audio Section -->
+                                           <div class="form-section text-left">
+                                               <h3>Audio Details</h3>
+                                               <div class="form-group">
+                                                   <label for="audioAmbient">Ambient (Suara Sekitar):</label>
+                                                   <textarea id="audioAmbient" class="form-control" rows="2" placeholder="distant city sounds muffled by window, faint buzz of the desk lamp, rustle of fabric, her short exasperated sighs, silence otherwise"></textarea>
+                                               </div>
+                                           </div>
 
-            const renderCharacters = () => {
-                characterListUl.innerHTML = '';
-                characterSelect.innerHTML = '<option value="">-- Tanpa Karakter --</option>';
-                characters.forEach(char => {
-                    const option = document.createElement('option');
-                    option.value = char.id;
-                    option.textContent = char.name;
-                    characterSelect.appendChild(option);
+                                           <!-- Color Palette Section -->
+                                           <div class="form-section text-left">
+                                               <h3>Color Palette</h3>
+                                               <div class="form-group">
+                                                   <label for="colorPalette">Color Palette (Palet Warna):</label>
+                                                   <select id="colorPalette" class="form-control">
+                                                       <option value="">-- Select Color Palette --</option>
+                                                   </select>
+                                               </div>
+                                           </div>
 
-                    const li = document.createElement('li');
-                    li.className = 'flex justify-between items-center bg-gray-50 p-3 rounded-md border border-gray-200';
-                    li.innerHTML = `
-                        <span class="font-medium text-gray-700">${char.name}</span>
-                        <div class="flex space-x-2">
-                            <button class="px-3 py-1 text-sm bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors edit-btn" data-id="${char.id}">Edit</button>
-                            <button class="px-3 py-1 text-sm bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors delete-btn" data-id="${char.id}">Hapus</button>
+                                           <!-- Dialogue Section -->
+                                           <div class="form-section text-left">
+                                               <h3>Dialogue</h3>
+                                               <div id="dialogueEntries">
+                                                   <!-- Dialogue entries will be added here by JavaScript -->
+                                               </div>
+                                               <button type="button" class="custom-btn btn-secondary mt-2" id="addDialogueBtn">Add Dialogue (Tambah Dialog)</button>
+                                               <div class="form-group form-check mt-3">
+                                                   <input type="checkbox" class="form-check-input" id="dialogueSubtitles">
+                                                   <label class="form-check-label checkbox-label" for="dialogueSubtitles">Subtitles (Subtitel)</label>
+                                               </div>
+                                           </div>
+
+                                           <button type="button" class="custom-btn btn-bg btn mt-3" onclick="generateJson()">Generate JSON</button>
+                                       </form>
+                                   </div>
+
+                                   <div class="mt-5" data-aos="fade-up" data-aos-delay="200">
+                                       <h2 class="text-white">Generated JSON:</h2>
+                                       <pre id="generatedJson"></pre>
+                                       <button type="button" class="custom-btn btn-bg btn mt-3" id="copyJsonBtn" onclick="copyJsonToClipboard()">Copy JSON</button>
+                                   </div>
+
+                              </div>
                         </div>
-                    `;
-                    characterListUl.appendChild(li);
-                });
-            };
 
-            const populateCharacterForm = (charData) => {
-                characterForm.reset(); // Reset form first
-                characterIdInput.value = charData.id || '';
-                characterNameInput.value = charData.name || '';
-                const details = JSON.parse(charData.details || JSON.stringify(getInitialCharacterTemplate()));
+                    </div>
+               </div>
+     </section>
 
-                charGenderInput.value = details.gender || '';
-                charAgeInput.value = details.age || '';
-                charEthnicityInput.value = details.ethnicity || '';
-                
-                if(details.face) {
-                    charFaceShapeInput.value = details.face.shape || '';
-                    charSkinToneInput.value = details.face.skin_tone || '';
-                    charEyeColorInput.value = details.face.eye_color || '';
-                    charNoseShapeInput.value = details.face.nose_shape || '';
-                    charLipShapeInput.value = details.face.lip_shape || '';
-                }
+    <footer class="site-footer">
+      <div class="container">
+        <div class="row">
 
-                if(details.hair) {
-                    charHairColorInput.value = details.hair.color || '';
-                    charHairLengthInput.value = details.hair.length || '';
-                    // Set the correct dropdown's value after checking gender
-                    if (details.gender && details.hair.style) {
-                        if (details.gender.toLowerCase().startsWith('pria')) {
-                            charHairStylePriaInput.value = details.hair.style;
-                        } else if (details.gender.toLowerCase().startsWith('wanita')) {
-                            charHairStyleWanitaInput.value = details.hair.style;
-                        }
-                    }
-                }
+          <div class="col-lg-5 mx-lg-auto col-md-8 col-10">
+            <h1 class="text-white" data-aos="fade-up" data-aos-delay="100">Video Prompt <strong>Generator</strong>.</h1>
+          </div>
 
-                if(details.body){
-                    charBodyBuildInput.value = details.body.build || '';
-                    charBodyHeightInput.value = details.body.height || '';
-                }
-                
-                if(details.distinguishing_features){
-                    charFeature1Input.value = details.distinguishing_features.feature_1 || '';
-                    charFeature2Input.value = details.distinguishing_features.feature_2 || '';
-                }
+          <div class="col-lg-3 col-md-6 col-12" data-aos="fade-up" data-aos-delay="200">
+            <h4 class="my-4">Contact Info</h4>
 
-                charHeadAccessoryInput.value = details.head_accessory || '';
+            <p class="mb-1">
+              <i class="fa fa-phone mr-2 footer-icon"></i>
+              +62xxxxxxxx
+            </p>
 
-                // IMPORTANT: Update visibility after populating form
-                updateHairStyleVisibility();
-            };
+            <p>
+              <a href="#">
+                <i class="fa fa-envelope mr-2 footer-icon"></i>
+                hello@company.com
+              </a>
+            </p>
+          </div>
 
-            // --- EVENT LISTENERS ---
-            clothingTopSelect.addEventListener('change', () => toggleCustomInput(clothingTopSelect, clothingTopDetailInput));
-            clothingBottomSelect.addEventListener('change', () => toggleCustomInput(clothingBottomSelect, clothingBottomDetailInput));
-            clothingFootwearSelect.addEventListener('change', () => toggleCustomInput(clothingFootwearSelect, clothingFootwearDetailInput));
-            charGenderInput.addEventListener('input', updateHairStyleVisibility);
+          <div class="col-lg-3 col-md-6 col-12" data-aos="fade-up" data-aos-delay="300">
+            <h4 class="my-4">Our Studio</h4>
 
-            manageCharactersBtn.addEventListener('click', () => {
-                populateCharacterForm({ details: JSON.stringify(getInitialCharacterTemplate()) });
-                openModal();
-            });
+            <p class="mb-1">
+              <i class="fa fa-home mr-2 footer-icon"></i>
+              <a href="https://www.facebook.com/groups/aiindonesiaart">AI Indonesia Art</a>
+            </p>
+          </div>
 
-            closeModalBtn.addEventListener('click', closeModal);
-            window.addEventListener('click', (e) => {
-                if (e.target == characterModal) closeModal();
-            });
+          <div class="col-lg-4 mx-lg-auto text-center col-md-8 col-12" data-aos="fade-up" data-aos-delay="400">
+            <p class="copyright-text">Copyright &copy; 2025 Wadesing
+            <br>
+            <a rel="nofollow noopener" href="https://templatemo.com">Design: TemplateMo</a></p>
+          </div>
 
-            characterForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const id = characterIdInput.value;
-                const name = characterNameInput.value.trim();
-                if (!name) {
-                    alert('Nama Karakter tidak boleh kosong.');
-                    return;
-                }
+          <div class="col-lg-4 mx-lg-auto col-md-6 col-12" data-aos="fade-up" data-aos-delay="500">
 
-                const details = {
-                    gender: charGenderInput.value.trim(),
-                    age: charAgeInput.value.trim(),
-                    ethnicity: charEthnicityInput.value.trim(),
-                    face: {
-                        shape: charFaceShapeInput.value.trim(),
-                        skin_tone: charSkinToneInput.value.trim(),
-                        eye_color: charEyeColorInput.value.trim(),
-                        nose_shape: charNoseShapeInput.value.trim(),
-                        lip_shape: charLipShapeInput.value.trim()
-                    },
-                    hair: {
-                        color: charHairColorInput.value.trim(),
-                        style: charHairStylePriaInput.classList.contains('hidden') ? charHairStyleWanitaInput.value.trim() : charHairStylePriaInput.value.trim(),
-                        length: charHairLengthInput.value.trim()
-                    },
-                    body: {
-                        build: charBodyBuildInput.value.trim(),
-                        height: charBodyHeightInput.value.trim()
-                    },
-                    distinguishing_features: {
-                        feature_1: charFeature1Input.value.trim(),
-                        feature_2: charFeature2Input.value.trim()
-                    },
-                    head_accessory: charHeadAccessoryInput.value.trim()
-                };
+            <ul class="footer-link">
+            </ul>
+          </div>
 
-                for (const key in details) {
-                    if (typeof details[key] === 'object' && details[key] !== null && !Array.isArray(details[key])) {
-                        let allEmpty = true;
-                        for (const subKey in details[key]) {
-                            if (details[key][subKey]) {
-                                allEmpty = false;
-                                break;
-                            }
-                        }
-                        if (allEmpty) delete details[key];
-                    } else if (!details[key]) {
-                        delete details[key];
-                    }
-                }
+          <div class="col-lg-3 mx-lg-auto col-md-6 col-12" data-aos="fade-up" data-aos-delay="600">
+            <ul class="social-icon">
+              <li><a href="#" class="fa fa-instagram"></a></li>
+              <li><a href="#" class="fa fa-twitter"></a></li>
+              <li><a href="#" class="fa fa-dribbble"></a></li>
+              <li><a href="#" class="fa fa-behance"></a></li>
+            </ul>
+          </div>
 
-                const detailsJsonString = JSON.stringify(details, null, 2);
+        </div>
+      </div>
+    </footer>
 
-                if (id) {
-                    const charIndex = characters.findIndex(c => c.id == id);
-                    if (charIndex > -1) {
-                        characters[charIndex].name = name;
-                        characters[charIndex].details = detailsJsonString;
-                    }
-                } else {
-                    characters.push({
-                        id: Date.now().toString(),
-                        name: name,
-                        details: detailsJsonString
-                    });
-                }
-                
-                saveCharacters();
-                renderCharacters();
-                closeModal();
-            });
 
-            characterListUl.addEventListener('click', (e) => {
-                const id = e.target.dataset.id;
-                if (!id) return;
+     <!-- SCRIPTS -->
+     <script src="assets/js/jquery.min.js"></script>
+     <script src="assets/js/bootstrap.min.js"></script>
+     <script src="assets/js/aos.js"></script>
+     <script src="assets/js/owl.carousel.min.js"></script>
+     <script src="assets/js/smoothscroll.js"></script>
+     <script src="assets/js/custom.js"></script>
 
-                if (e.target.classList.contains('edit-btn')) {
-                    const char = characters.find(c => c.id === id);
-                    if (char) {
-                        populateCharacterForm(char);
-                        openModal();
-                    }
-                }
+     <script>
+        const shotTypeSuggestions = new Map();
 
-                if (e.target.classList.contains('delete-btn')) {
-                    const charName = characters.find(c => c.id === id)?.name || 'karakter ini';
-                    if (confirm(`Apakah Anda yakin ingin menghapus karakter "${charName}"?`)) {
-                        characters = characters.filter(c => c.id !== id);
-                        saveCharacters();
-                        renderCharacters();
-                    }
-                }
-            });
-
-            generateBtn.addEventListener('click', () => {
-                const getVal = id => document.getElementById(id).value.trim();
-                const selectedStyleArray = [];
-
-                if (styleSelect.value) selectedStyleArray.push(styleSelect.value);
-                if (japaneseStyleSelect.value) selectedStyleArray.push(`in the style of ${japaneseStyleSelect.value}`);
-                if (colorFilmTypeSelect.value) selectedStyleArray.push(colorFilmTypeSelect.value);
-                if (lightConditionsSelect.value) selectedStyleArray.push(lightConditionsSelect.value);
-                if (colorToneSelect.value) selectedStyleArray.push(colorToneSelect.value);
-                if (getVal('angle-select')) selectedStyleArray.push(`${getVal('angle-select')} Shot`);
-                if (getVal('camera-type-select')) selectedStyleArray.push(`Shot with ${getVal('camera-type-select')}`);
-                if (lensSelect.value) selectedStyleArray.push(lensSelect.value);
-
-                if (depthOfFieldSelect.value) {
-                    let dofValue = depthOfFieldSelect.value;
-                    if (depthOfFieldDetailInput.value) {
-                        dofValue += ` (${depthOfFieldDetailInput.value})`;
-                    }
-                    selectedStyleArray.push(dofValue);
-                }
-
-                const promptObject = { visual: {} };
-
-                const clothing = {};
-                if (clothingStyleSelect.value) clothing.style = clothingStyleSelect.value;
-                if (clothingTopSelect.value) {
-                    let topValue = clothingTopSelect.value;
-                    if (clothingTopDetailInput.value) topValue += ` (${clothingTopDetailInput.value})`;
-                    clothing.top = topValue;
-                }
-                if (clothingBottomSelect.value) {
-                    let bottomValue = clothingBottomSelect.value;
-                    if (clothingBottomDetailInput.value) bottomValue += ` (${clothingBottomDetailInput.value})`;
-                    clothing.bottom = bottomValue;
-                }
-                if (clothingFootwearSelect.value) {
-                    let footwearValue = clothingFootwearSelect.value;
-                    if (clothingFootwearDetailInput.value) footwearValue += ` (${clothingFootwearDetailInput.value})`;
-                    clothing.footwear = footwearValue;
-                }
-                if (Object.keys(clothing).length > 0) promptObject.visual.clothing = clothing;
-
-                const expression = {};
-                if (getVal('facial-expression-select')) expression.facial = getVal('facial-expression-select');
-                if (getVal('facial-expression-detail')) expression.facial_detail = getVal('facial-expression-detail');
-                if (getVal('emotion-select')) expression.emotion = getVal('emotion-select');
-                if (getVal('emotion-detail')) expression.emotion_detail = getVal('emotion-detail');
-                if (getVal('emotion-intensity-select')) expression.intensity = getVal('emotion-intensity-select');
-                if (getVal('emotion-intensity-detail')) expression.intensity_detail = getVal('emotion-intensity-detail');
-                if (Object.keys(expression).length > 0) promptObject.visual.expression = expression;
-
-                const selectedCharId = characterSelect.value;
-                if (selectedCharId) {
-                    const char = characters.find(c => c.id === selectedCharId);
-                    if (char) {
-                        try {
-                            const charDetails = JSON.parse(char.details);
-                            promptObject.visual.subject = {
-                                "nama_karakter": char.name,
-                                "karakter_konsisten": charDetails
-                            };
-                        } catch (e) {
-                            console.error("Error parsing character JSON:", e);
-                            promptObject.visual.subject = char.name;
-                        }
-                    }
-                }
-
-                if (getVal('action')) promptObject.visual.action = getVal('action');
-                if (getVal('setting')) promptObject.visual.setting = getVal('setting');
-                if (selectedStyleArray.length > 0) promptObject.style = selectedStyleArray.join(', ');
-
-                if (Object.keys(promptObject.visual).length === 0) delete promptObject.visual;
-                if (!promptObject.style) delete promptObject.style;
-
-                resultPrompt.value = JSON.stringify(promptObject, null, 2);
-            });
-
-            copyBtn.addEventListener('click', () => {
-                if (resultPrompt.value) {
-                    navigator.clipboard.writeText(resultPrompt.value).then(() => {
-                        copyFeedback.style.opacity = '1';
-                        copyBtn.style.display = 'none';
-                        setTimeout(() => {
-                            copyFeedback.style.opacity = '0';
-                            copyBtn.style.display = '';
-                        }, 2000);
-                    });
-                }
-            });
-
-            // --- INITIAL LOAD ---
-            renderCharacters();
+        // Data for Camera Motion, Lens, Aperture, and Visual Effect suggestions based on Shot Type
+        shotTypeSuggestions.set("Extreme Wide Shot (EWS)", {
+            cameraMotion: "Slow Pan / Drone Forward",
+            cameraMotionEmotionalImpact: "Isolasi, kebesaran dunia, epik",
+            lens: "Wide-Angle Lens (10mm – 35mm)",
+            aperture: "f/8 – f/11",
+            visualEffect: "Nunjukin skala, lingkungan, lokasi luas, semua fokus"
         });
-    </script>
+        shotTypeSuggestions.set("Wide Shot (WS) / Long Shot (LS)", {
+            cameraMotion: "Crane up / tilt up",
+            cameraMotionEmotionalImpact: "Bangkit, harapan, kekuatan, reveal dunia karakter",
+            lens: "Wide-Angle Lens (10mm – 35mm)",
+            aperture: "f/5.6 – f/8",
+            visualEffect: "Subjek dan latar kelihatan jelas, establishing shot"
+        });
+        shotTypeSuggestions.set("Full Shot (FS)", {
+            cameraMotion: "Static / Slight Pan",
+            cameraMotionEmotionalImpact: "Netral, dialog natural, nyaman untuk percakapan",
+            lens: "Wide-Angle Lens (10mm – 35mm)",
+            aperture: "f/5.6 – f/8",
+            visualEffect: "Subjek dan latar kelihatan jelas, establishing shot"
+        });
+        shotTypeSuggestions.set("Medium Long Shot (MLS)", {
+            cameraMotion: "Static / Slight Pan",
+            cameraMotionEmotionalImpact: "Netral, dialog natural, nyaman untuk percakapan",
+            lens: "Standard Lens (35mm – 70mm)",
+            aperture: "f/4 – f/5.6",
+            visualEffect: "Subjek mulai jelas, latar masih terbaca"
+        });
+        shotTypeSuggestions.set("Medium Shot (MS)", {
+            cameraMotion: "Static / Slight Pan",
+            cameraMotionEmotionalImpact: "Netral, dialog natural, nyaman untuk percakapan",
+            lens: "Standard Lens (35mm – 70mm)",
+            aperture: "f/2.8 – f/4",
+            visualEffect: "Komunikatif, ideal buat dialog 2 orang"
+        });
+        shotTypeSuggestions.set("Medium Close-Up (MCU)", {
+            cameraMotion: "Whip Pan / Snap Zoom",
+            cameraMotionEmotionalImpact: "Shock, twist, drama intens, energi cepat",
+            lens: "Telephoto Lens (70mm – 200mm+)",
+            aperture: "f/2 – f/2.8",
+            visualEffect: "Fokus ke ekspresi wajah, bokeh mulai kerasa"
+        });
+        shotTypeSuggestions.set("Close-Up (CU)", {
+            cameraMotion: "Push-in (dolly-in)",
+            cameraMotionEmotionalImpact: "Rasa intens, emosi dalam, fokus ke batin karakter",
+            lens: "Telephoto Lens (70mm – 200mm+)",
+            aperture: "f/1.8 – f/2.5",
+            visualEffect: "Emosi kuat, latar blur, subjek terisolasi"
+        });
+        shotTypeSuggestions.set("Extreme Close-Up (ECU)", {
+            cameraMotion: "Static or Focus Shift",
+            cameraMotionEmotionalImpact: "Detail, kelembutan, fokus produk atau perasaan",
+            lens: "Macro Lens (50mm – 100mm khusus)",
+            aperture: "f/2 – f/4",
+            visualEffect: "Detail ekstrem: mata, jari, produk — DoF super tipis"
+        });
+        shotTypeSuggestions.set("Over-the-Shoulder (OTS)", {
+            cameraMotion: "Focus Pull",
+            cameraMotionEmotionalImpact: "Perubahan fokus batin, perspektif ganda",
+            lens: "Standard Lens (35mm – 70mm)",
+            aperture: "f/2.8 – f/4",
+            visualEffect: "Fokus ke dialog, separasi subjek + background"
+        });
+        shotTypeSuggestions.set("Two-Shot (MS/WS)", {
+            cameraMotion: "Steadicam tracking",
+            cameraMotionEmotionalImpact: "Koneksi antar karakter, hubungan dinamis",
+            lens: "Standard Lens (35mm – 70mm)",
+            aperture: "f/2.8 – f/5.6",
+            visualEffect: "Komunikasi antar karakter, tetap kebaca dua orang"
+        });
+        shotTypeSuggestions.set("Tracking / Dolly", {
+            cameraMotion: "Steadicam tracking",
+            cameraMotionEmotionalImpact: "Jaga subjek tetap fokus saat bergerak",
+            lens: "Standard Lens (35mm – 70mm)", // Adjusted to a common range for tracking
+            aperture: "f/2.8 – f/4",
+            visualEffect: "Jaga subjek tetap fokus saat bergerak"
+        });
+        shotTypeSuggestions.set("Crane / Drone Shot", {
+            cameraMotion: "Crane up / tilt up",
+            cameraMotionEmotionalImpact: "Jaga semua fokus dari ketinggian",
+            lens: "Ultra-Wide Lens (< 16mm)", // Adjusted for wide aerial shots
+            aperture: "f/5.6 – f/11",
+            visualEffect: "Jaga semua fokus dari ketinggian"
+        });
+        shotTypeSuggestions.set("Portrait Shot", {
+            cameraMotion: "Static / Slight Pan",
+            cameraMotionEmotionalImpact: "Subjek standout, creamy background, sinematik",
+            lens: "Telephoto Lens (70mm – 200mm+)", // Common for portraits
+            aperture: "f/1.4 – f/2.2",
+            visualEffect: "Portrait DoF"
+        });
 
-</body>
-</html>
+        const toneDetails = new Map();
+        toneDetails.set("Realistic", {
+            lighting: "Natural light, soft bounce, motivated practicals",
+            colorPalette: "Earth tones, beige, soft white, light blue, moss green, natural skin tones"
+        });
+        toneDetails.set("Intimate", {
+            lighting: "Soft warm key, subtle fill, shallow DoF",
+            colorPalette: "Warm amber, dusty rose, light brown, honey tone, soft peach, natural skin glow"
+        });
+        toneDetails.set("Frustrated", {
+            lighting: "Hard sidelight/toplight, contrast tinggi",
+            colorPalette: "Steel blue, charcoal gray, dirty green, muted maroon, desaturated skin tones"
+        });
+        toneDetails.set("Moody", {
+            lighting: "Low key, directional soft light, haze",
+            colorPalette: "Deep teal, dark olive, burnt umber, muted cyan, navy, cold amber highlight"
+        });
+        toneDetails.set("Melancholy", {
+            lighting: "Cool soft key, fog, minimal fill",
+            colorPalette: "Desaturated blue-gray, soft lavender, pale cyan, dusty lilac, faded olive"
+        });
+        toneDetails.set("Romantic", {
+            lighting: "Warm soft backlight, diffusion",
+            colorPalette: "Golden peach, blush pink, champagne, soft red-orange, warm sepia, sunset amber"
+        });
+        toneDetails.set("Cold / Isolated", {
+            lighting: "Harsh daylight, no fill, blue gels",
+            colorPalette: "Icy blue, cool gray, pale turquoise, desaturated green, flat white, silver"
+        });
+        toneDetails.set("Dreamy / Fantastical", {
+            lighting: "Soft haze, pastel gels",
+            colorPalette: "Lavender, pastel yellow, soft pink, mint green, light periwinkle, dreamy peach"
+        });
+        toneDetails.set("Energetic / Pop", {
+            lighting: "Neon light, vibrant key",
+            colorPalette: "Electric cyan, hot pink, lime green, punchy orange, ultraviolet, digital purple"
+        });
+        toneDetails.set("Heroic / Epic", {
+            lighting: "Strong key from above, rim light",
+            colorPalette: "Deep gold, royal blue, blood red, charcoal, sharp silver, sunlit bronze"
+        });
+        toneDetails.set("Mysterious / Noir", {
+            lighting: "Hard low key, shadow play",
+            colorPalette: "Jet black, warm gray, dirty white, blood red, faded sepia, monochrome desat"
+        });
+        toneDetails.set("Surreal / Absurd", {
+            lighting: "Unnatural angles, color clash",
+            colorPalette: "Acid green, neon purple, coral red, pale orange, glitch pink, surreal cyan"
+        });
+        toneDetails.set("Tense / Horror", {
+            lighting: "Top light, underfill, flicker",
+            colorPalette: "Sickly green, dirty yellow, cold blue, muted brown, blood tone, black-blue"
+        });
+        toneDetails.set("Clean / Minimalist", {
+            lighting: "High key soft wrap light",
+            colorPalette: "Pure white, soft gray, muted sky blue, modern beige, pastel mint, light chrome"
+        });
+        toneDetails.set("Nostalgic", {
+            lighting: "Golden hour + haze",
+            colorPalette: "Sepia, faded orange, vintage brown, mustard yellow, dusty rose, 90s film tone"
+        });
+
+        function updateToneLightingSuggestion() {
+            const cineToneSelect = document.getElementById('cineTone');
+            const cineLightingSelect = document.getElementById('cineLighting');
+            const colorPaletteSelect = document.getElementById('colorPalette');
+            const selectedTone = cineToneSelect.value;
+
+            // Clear existing options except the default one
+            cineLightingSelect.innerHTML = '<option value="">-- Select Lighting Style --</option>';
+            colorPaletteSelect.innerHTML = '<option value="">-- Select Color Palette --</option>';
+
+            if (toneDetails.has(selectedTone)) {
+                const details = toneDetails.get(selectedTone);
+
+                // Add lighting option
+                const lightingOption = document.createElement('option');
+                lightingOption.value = details.lighting;
+                lightingOption.textContent = details.lighting;
+                cineLightingSelect.appendChild(lightingOption);
+
+                // Add color palette option
+                const colorPaletteOption = document.createElement('option');
+                colorPaletteOption.value = details.colorPalette;
+                colorPaletteOption.textContent = details.colorPalette;
+                colorPaletteSelect.appendChild(colorPaletteOption);
+
+                // Set selected value for lighting and color palette
+                cineLightingSelect.value = details.lighting;
+                colorPaletteSelect.value = details.colorPalette;
+            }
+        }
+
+        function updateShotSuggestions() {
+            const shotTypeSelect = document.getElementById('shotType');
+            const selectedShotType = shotTypeSelect.value;
+
+            const cameraMotionSelect = document.getElementById('shotCameraMotion');
+            const lensSelect = document.getElementById('lens');
+            const apertureSelect = document.getElementById('aperture');
+            const visualEffectSelect = document.getElementById('visualEffect');
+
+            const cameraMotionSuggestionSpan = document.getElementById('cameraMotionSuggestion');
+            const lensSuggestionSpan = document.getElementById('lensSuggestion');
+            const apertureSuggestionSpan = document.getElementById('apertureSuggestion');
+
+            const suggestion = shotTypeSuggestions.get(selectedShotType);
+
+            if (suggestion) {
+                // Update dropdowns with suggested values
+                cameraMotionSelect.value = suggestion.cameraMotion;
+                lensSelect.value = suggestion.lens;
+                apertureSelect.value = suggestion.aperture;
+                visualEffectSelect.value = suggestion.visualEffect;
+
+                // Update suggestion text
+                cameraMotionSuggestionSpan.textContent = `Saran: ${suggestion.cameraMotion}, Kesan Emosional: ${suggestion.cameraMotionEmotionalImpact}`;
+                lensSuggestionSpan.textContent = `Saran: ${suggestion.lens}`;
+                apertureSuggestionSpan.textContent = `Saran: ${suggestion.aperture}`;
+            } else {
+                // Clear dropdowns and suggestions if no match
+                cameraMotionSelect.value = "";
+                lensSelect.value = "";
+                apertureSelect.value = "";
+                visualEffectSelect.value = "";
+
+                cameraMotionSuggestionSpan.textContent = '';
+                lensSuggestionSpan.textContent = '';
+                apertureSuggestionSpan.textContent = '';
+            }
+        }
+
+        function generateJson() {
+            // Construct composition string from individual inputs
+            const shotType = document.getElementById('shotType').value;
+            const lens = document.getElementById('lens').value;
+            const aperture = document.getElementById('aperture').value;
+            const camera = document.getElementById('camera').value;
+            const visualEffect = document.getElementById('visualEffect').value;
+
+            let compositionString = "";
+            if (shotType) compositionString += shotType;
+            if (lens) compositionString += (compositionString ? ", " : "") + lens;
+            if (aperture) compositionString += (compositionString ? ", " : "") + aperture;
+            if (camera) compositionString += (compositionString ? ", " : "") + camera;
+            if (visualEffect) compositionString += (compositionString ? ", " : "") + visualEffect;
+
+            const data = {
+                shot: {
+                    composition: compositionString || null,
+                    camera_motion: document.getElementById('shotCameraMotion').value || null,
+                    frame_rate: document.getElementById('shotFrameRate').value || null,
+                    film_grain: document.getElementById('shotFilmGrain').value || null
+                },
+                subject: {
+                    description: document.getElementById('subjectDescription').value || null,
+                    wardrobe: document.getElementById('subjectWardrobe').value || null
+                },
+                scene: {
+                    location: document.getElementById('sceneLocation').value || null,
+                    time_of_day: document.getElementById('sceneTimeOfDay').value || null,
+                    environment: document.getElementById('sceneEnvironment').value || null
+                },
+                visual_details: {
+                    action: document.getElementById('visualAction').value || null,
+                    props: document.getElementById('visualProps').value || null
+                },
+                cinematography: {
+                    lighting: document.getElementById('cineLighting').value || null,
+                    tone: document.getElementById('cineTone').value || null
+                },
+                audio: {
+                    ambient: document.getElementById('audioAmbient').value || null
+                },
+                color_palette: document.getElementById('colorPalette').value || null,
+                dialogue: {
+                    entries: [], // Initialize as empty array
+                    subtitles: document.getElementById('dialogueSubtitles').checked
+                }
+            };
+
+            // Handle Dialogue entries
+            const dialogueEntries = document.querySelectorAll('.dialogue-entry');
+            dialogueEntries.forEach(entryDiv => {
+                const character = entryDiv.querySelector('.dialogue-character').value.trim();
+                const line = entryDiv.querySelector('.dialogue-line').value.trim();
+                if (character || line) { // Only add if either character or line has content
+                    data.dialogue.entries.push({
+                        character: character || null,
+                        line: line || null
+                    });
+                }
+            });
+
+            // Clean up empty objects/nulls for a cleaner JSON output
+            for (const key in data) {
+                if (typeof data[key] === 'object' && data[key] !== null) {
+                    for (const subKey in data[key]) {
+                        if (data[key][subKey] === null || data[key][subKey] === '') {
+                            delete data[key][subKey];
+                        }
+                    }
+                    if (Object.keys(data[key]).length === 0) {
+                        data[key] = null; // Set parent object to null if all children are empty
+                    }
+                } else if (data[key] === null || data[key] === '') {
+                    data[key] = null;
+                }
+            }
+
+            // Special handling for dialogue.subtitles if entries is empty and subtitles is false
+            if (data.dialogue && data.dialogue.entries.length === 0 && !data.dialogue.subtitles) {
+                data.dialogue = null;
+            }
+
+
+            document.getElementById('generatedJson').textContent = JSON.stringify(data, null, 2);
+        }
+
+        async function copyJsonToClipboard() {
+            const jsonText = document.getElementById('generatedJson').textContent;
+            try {
+                await navigator.clipboard.writeText(jsonText);
+                const copyBtn = document.getElementById('copyJsonBtn');
+                copyBtn.textContent = 'Copied!';
+                setTimeout(() => {
+                    copyBtn.textContent = 'Copy JSON';
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy: ', err);
+                alert('Failed to copy JSON. Please copy manually.');
+            }
+        }
+
+        let dialogueEntryCount = 0; // To keep track of unique IDs
+
+        function addDialogueEntry(character = '', line = '') {
+            const dialogueEntriesDiv = document.getElementById('dialogueEntries');
+            const newEntryDiv = document.createElement('div');
+            newEntryDiv.classList.add('dialogue-entry', 'mt-3'); // Add margin-top for spacing
+
+            const currentId = dialogueEntryCount++;
+
+            newEntryDiv.innerHTML = `
+                <div class="form-group">
+                    <label for="dialogueCharacter_${currentId}">Character (Karakter):</label>
+                    <input type="text" id="dialogueCharacter_${currentId}" class="form-control dialogue-character" value="${character}">
+                </div>
+                <div class="form-group">
+                    <label for="dialogueLine_${currentId}">Line (Baris Dialog):</label>
+                    <textarea id="dialogueLine_${currentId}" class="form-control dialogue-line" rows="2">${line}</textarea>
+                </div>
+                <button type="button" class="btn btn-danger btn-sm remove-dialogue-btn">Remove</button>
+            `;
+            dialogueEntriesDiv.appendChild(newEntryDiv);
+
+            // Add event listener for the new remove button
+            newEntryDiv.querySelector('.remove-dialogue-btn').addEventListener('click', function() {
+                newEntryDiv.remove();
+            });
+        }
+
+        // Initial call to add one empty dialogue entry when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            const shotTypeSelect = document.getElementById('shotType');
+            shotTypeSelect.addEventListener('change', updateShotSuggestions);
+            document.getElementById('addDialogueBtn').addEventListener('click', () => addDialogueEntry());
+            document.getElementById('cineTone').addEventListener('change', updateToneLightingSuggestion);
+
+            // Set a default tone and update dependent fields on load
+            document.getElementById('cineTone').value = 'Frustrated';
+
+            // Initial update in case a default value is selected
+            updateShotSuggestions();
+            updateToneLightingSuggestion(); // Call this on load to set initial values
+            addDialogueEntry(); // Add the first empty dialogue entry dynamically
+        });
+     </script>
